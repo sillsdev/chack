@@ -187,5 +187,10 @@ namespace SampleApp
 
             }
         }
+
+		private void geckofxbutton_Click(object sender, EventArgs e)
+		{
+			new GeckoTestDlg().ShowDialog();
+		}
 	}
 }

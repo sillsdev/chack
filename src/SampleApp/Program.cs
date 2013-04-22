@@ -20,7 +20,6 @@ namespace SampleApp
                 DeleteFolderThatMayBeInUse(dataDirectory);
             Directory.CreateDirectory(dataDirectory);
 
-
 			Application.Run(new Form1(dataDirectory));
 		}
 
