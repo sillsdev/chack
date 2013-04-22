@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using Chorus.VcsDrivers.Mercurial;
+using Gecko;
 
 namespace Chorus
 {
@@ -17,6 +18,7 @@ namespace Chorus
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+			Xpcom.Initialize("xulrunner");
 
             SetUpErrorHandling();
 
