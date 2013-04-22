@@ -18,7 +18,6 @@ namespace Chorus
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-			Xpcom.Initialize("xulrunner");
 
             SetUpErrorHandling();
 

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using Gecko;
 
 namespace SampleApp
 {
@@ -12,6 +13,7 @@ namespace SampleApp
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			Xpcom.Initialize("xulrunner");
 
             string dataDirectory = Path.Combine(Path.GetTempPath(), "ChorusSampleApp");
             if(Directory.Exists(dataDirectory ))
