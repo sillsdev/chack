@@ -1,0 +1,669 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Palaso.Media</name>
+    </assembly>
+    <members>
+        <member name="F:Palaso.Media.SoundFieldControl.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.SoundFieldControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Palaso.Media.SoundFieldControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Palaso.Media.Naudio.UI.BtnState">
+            <summary>
+            possible button states
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.Naudio.UI.BtnState.Inactive">
+            <summary>
+            The button is disabled.
+            </summary>		
+        </member>
+        <member name="F:Palaso.Media.Naudio.UI.BtnState.Normal">
+            <summary>
+            The button is in it normal unpressed state
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.Naudio.UI.BtnState.MouseOver">
+            <summary>
+            The location of the mouse is over the button
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.Naudio.UI.BtnState.Pushed">
+            <summary>
+            The button is currently being pressed
+            </summary>
+        </member>
+        <member name="T:Palaso.Media.Naudio.UI.BitmapButton">
+            <summary>
+            The purpose of this class is to continue to provide the regular functionality of button class with
+            some additional bitmap enhancments. These enhancements allow the specification of bitmaps for each 
+            state of the button. In addition, it makes use of the alignment properties already provided by the 
+            base button class. Since this class renders the image, it should appear similar accross platforms.	
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.Naudio.UI.BitmapButton.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.#ctor">
+            <summary>
+            The BitmapButton constructor
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            This method paints the button in its entirety.
+            </summary>
+            <param name="e">paint arguments use to paint the button</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.paint_Background(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            This method fills the background of the button.
+            </summary>
+            <param name="e">paint arguments use to paint the button</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.paint_Border(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            paints the 1 pixel border around the button. The color of
+            the border is defined by BorderColor
+            </summary>
+            <param name="e">paint arguments use to paint the button</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.paint_FocusBorder(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            paints the focus rectangle. 
+            </summary>
+            <param name="e">paint arguments use to paint the button</param>		 
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.paint_InnerBorder(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            paint the inner border of the button.
+            </summary>
+            <param name="e">paint arguments use to paint the button</param>		 
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.paint_Text(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            This method paints the text and text shadow for the button.
+            </summary>
+            <param name="e">paint arguments use to paint the button</param>		 
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.paint_ImageBorder(System.Drawing.Graphics,System.Drawing.Rectangle)">
+            <summary>
+            Paints a border around the image. If Image drop shadow is enabled,
+            a shodow is drawn too.
+            </summary>
+            <param name="g">The graphics object</param>
+            <param name="ImageRect">the rectangle region of the image</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.paint_Image(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Paints the image on the button.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.txt_Size(System.Drawing.Graphics,System.String,System.Drawing.Font)">
+            <summary>
+            Calculates the required size to draw a text string
+            </summary>
+            <param name="g">the graphics object</param>
+            <param name="strText">string to calculate text region</param>
+            <param name="font">font to use for the string</param>
+            <returns>returns the size required to draw a text string</returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.GetTextDestinationRect">
+            <summary>
+            Calculates the rectangular region used for text display.
+            </summary>
+            <returns>returns the rectangular region for the text display</returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.GetImageDestinationRect">
+            <summary>
+            Calculates the rectangular region used for image display.
+            </summary>
+            <returns>returns the rectangular region used to display the image</returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.GetCurrentImage(Palaso.Media.Naudio.UI.BtnState)">
+            <summary>
+            This method is used to retrieve the image used by the button for the given state.
+            </summary>
+            <param name="btnState">holds the state of the button</param>
+            <returns>returns the button Image</returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.ConvertToGrayscale(System.Drawing.Bitmap)">
+            <summary>
+            converts a bitmap image to grayscale
+            </summary>
+            <param name="source">bitmap source</param>
+            <returns>returns a grayscaled bitmap</returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.Calculate_LeftEdgeTopEdge(System.Drawing.ContentAlignment,System.Drawing.Rectangle,System.Int32,System.Int32)">
+            <summary>
+            calculates the left/top edge for content.
+            </summary>
+            <param name="Alignment">the alignment of the content</param>
+            <param name="rect">rectagular region to place content</param>
+            <param name="nWidth">with of content</param>
+            <param name="nHeight">height of content</param>
+            <returns>returns the left/top edge to place content</returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.CreateRegion(System.Int32)">
+            <summary>
+            creates the region for the control. The region will have curved edges. 
+            This prevents any drawing outside of the region.
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.border_Contract(System.Int32,System.Drawing.Point[]@)">
+            <summary>
+            contract the array of points that define the border.
+            </summary>
+            <param name="nPixel">number of pixels to conract</param>
+            <param name="pts">array of points that define the border</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.border_Get(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            calculates the array of points that make up a border
+            </summary>
+            <param name="nLeftEdge">left edge of border</param>
+            <param name="nTopEdge">top edge of border</param>
+            <param name="nWidth">width of border</param>
+            <param name="nHeight">height of border</param>
+            <returns>returns an array of points that make up the border</returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.Shade(System.Drawing.Color,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Increments or decrements the red/green/blue values of a color. It enforces that the
+            values do not go out of the bounds of 0..255
+            </summary>
+            <param name="SColor">source color</param>
+            <param name="RED">red shift</param>
+            <param name="GREEN">green shift</param>
+            <param name="BLUE">blue shift</param>
+            <returns>returns the calculated color</returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.Blend(System.Drawing.Color,System.Drawing.Color,System.Int32)">
+            <summary>
+            Calculates a blended color using the specified parameters. 
+            </summary>
+            <param name="SColor">Source Color (color moving from)</param>
+            <param name="DColor">Dest Color (color movving towards)</param>
+            <param name="Percentage">Percentage of Dest Color (0..100)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.OnMouseDown(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse Down Event:
+            set BtnState to Pushed and Capturing mouse to true
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.OnMouseUp(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse Up Event:
+            Set BtnState to Normal and set CapturingMouse to false
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.OnMouseLeave(System.EventArgs)">
+            <summary>
+            Mouse Leave Event:
+            Set BtnState to normal if we CapturingMouse = true
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.OnMouseMove(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Mouse Move Event:
+            If CapturingMouse = true and mouse coordinates are within button region, 
+            set BtnState to Pushed, otherwise set BtnState to Normal.
+            If CapturingMouse = false, then set BtnState to MouseOver
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.OnEnabledChanged(System.EventArgs)">
+            <summary>
+            Enable/Disable Event:
+            If button became enabled, set BtnState to Normal
+            else set BtnState to Inactive
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.BitmapButton.OnLostFocus(System.EventArgs)">
+            <summary>
+            Lose Focus Event:
+            set btnState to Normal
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.TextDropShadow">
+            <summary>
+            Enable the shadowing of the button text
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.FocusRectangleEnabled">
+            <summary>
+            Enables the dashed focus rectangle
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.ImageDropShadow">
+            <summary>
+            Enable the shadowing of the image in the button
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.ImageBorderColor">
+            <summary>
+            This specifies the color of image border. Note, this is only valid if ImageBorder is enabled.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.ImageBorderEnabled">
+            <summary>
+            This enables/disables the bordering of the image.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.BorderColor">
+            <summary>
+            Color of the border around the button
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.InnerBorderColor_Focus">
+            <summary>
+            Color of the inner border when the button has focus
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.InnerBorderColor">
+            <summary>
+            Color of the inner border when the button does not have focus
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.InnerBorderColor_MouseOver">
+            <summary>
+            Color of the inner border when the mouse is over the button.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.StretchImage">
+            <summary>
+            Stretches the image across the button
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.Padding">
+            <summary>
+            Specifies the padding in units of pixels around the button button elements. Currently,
+            the button elements consist of the image and text.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.OffsetPressedContent">
+            <summary>
+            Set to true if to offset button elements when button is pressed
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.ImageNormal">
+            <summary>
+            Image to be displayed while the button state is in normal state. If the other
+            states do not specify an image, this image is used as a substitute.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.ImageFocused">
+            <summary>
+            Specifies an image to use while the button has focus.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.ImageInactive">
+            <summary>
+            Specifies an image to use while the button is enactive.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.ImagePressed">
+            <summary>
+            Specifies an image to use while the button is pressed.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.ImageMouseOver">
+            <summary>
+            Specifies an image to use while the mouse is over the button.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.BitmapButton.ImageAttributes">
+            <summary>
+            Use this to recolor the image
+            </summary>
+        </member>
+        <member name="T:Palaso.Media.MediaInfo">
+            <summary>
+            This class uses ffmpeg to gather information about media streams
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.MediaInfo.RawData">
+            <summary>
+            The actual ffmpeg output
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.MediaInfo.GetDuration(System.String)">
+            <summary>
+            used by both audio and video, so it lives up here
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.MediaInfo.HaveNecessaryComponents">
+            <summary>
+             Returns false if it can't find ffmpeg
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.AudioIrrKlangSession.MakeTempCopyIfNeededBecauseOfUnicode(System.String,System.String@)">
+            <summary>
+            this version of irrklang can't play if there's non-latin in there
+            see http://www.ambiera.com/forum.php?t=601
+            </summary>
+            <returns>true if you need to use the provided temp file</returns>
+        </member>
+        <member name="T:Palaso.Media.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.Naudio.AudioRecorder._waveIn">
+            <summary>
+            This guy is always working, whether we're playing, recording, or just idle (monitoring)
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.Naudio.AudioRecorder._writer">
+            <summary>
+            This guy is disposed each time the client calls stop to stop recording and gets recreated
+            each time the client starts recording (i.e. using BeginRecording).
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.AudioRecorder.#ctor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="maxMinutes">REVIW: why does this max time even exist?  I don't see that it affects buffer size</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.AudioRecorder.Dispose">
+            ------------------------------------------------------------------------------------
+        </member>
+        <member name="M:Palaso.Media.Naudio.AudioRecorder.CloseWriter">
+            ------------------------------------------------------------------------------------
+        </member>
+        <member name="M:Palaso.Media.Naudio.AudioRecorder.CloseWaveIn">
+            ------------------------------------------------------------------------------------
+        </member>
+        <member name="M:Palaso.Media.Naudio.AudioRecorder.TransitionFromRecordingToMonitoring">
+            <summary>
+            as far as naudio is concerned, we are still "recording", but we aren't writing this file anymore
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.AudioRecorder.GetAudioBufferToAppendTo(System.String)">
+            ------------------------------------------------------------------------------------
+        </member>
+        <member name="T:Palaso.Media.Naudio.UI.AudioDeviceIcons">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.AudioDeviceIcons.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.AudioDeviceIcons.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.Naudio.UI.PeakMeterCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.PeakMeterCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.PeakMeterCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.PeakMeterCtrl.Start(System.Int32)">
+            <summary>
+            Start animation
+            </summary>
+            <param name="delay"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.PeakMeterCtrl.Stop">
+            <summary>
+            Stop Animation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.PeakMeterCtrl.SetMeterBands(System.Int32,System.Int32)">
+            <summary>
+            Set number of LED bands
+            </summary>
+            <param name="BandsCount">Number of bands</param>
+            <param name="LEDCount">Number of LED per bands</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.PeakMeterCtrl.SetRange(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Set range info
+            </summary>
+            <param name="minRangeVal">Min Range</param>
+            <param name="medRangeVal">Medium Range</param>
+            <param name="maxRangeVal">High Range</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.PeakMeterCtrl.SetData(System.Int32[],System.Int32,System.Int32)">
+            <summary>
+            Set meter band value
+            </summary>
+            <param name="arrayValue">Array value for the bands</param>
+            <param name="offset">Starting offset position</param>
+            <param name="size">Number of values to set</param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.PeakMeterCtrl.DarkenColor(System.Drawing.Color,System.Byte)">
+            <summary>
+            Make a color darker
+            </summary>
+            <param name="color">Color to darken</param>
+            <param name="darkenBy">Value to decrease by</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.PeakMeterCtrl.LightenColor(System.Drawing.Color,System.Byte)">
+            <summary>
+            Make a color lighter
+            </summary>
+            <param name="color"></param>
+            <param name="lightenBy"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Palaso.Media.Naudio.UI.PeakMeterCtrl.PeakLevel">
+            <summary>
+            the client needs to set this occasionally, for this control to be of any use. Value is between 0 and 1.0
+            </summary>
+        </member>
+        <member name="T:Palaso.Media.Naudio.RecordingDevice">
+            <summary>
+            A RecordingDevice is used to select and get information about the 
+            hardware which the record is listening to.
+            </summary>
+        </member>
+        <member name="T:Palaso.Media.FFmpegRunner">
+            <summary>
+             FFmpeg is an open source media processing commandline library
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.LocateAndRememberFFmpeg">
+            <summary>
+            Find the path to ffmpeg, and remember it (some apps (like SayMore) call ffmpeg a lot)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.LocateFFmpeg">
+            <summary>
+            ffmpeg is more of a "compile it yourself" thing, and yet
+            SIL doesn't necessarily want to be redistributing something
+            which may violate software patents (e.g. mp3) in certain countries, so
+            we ask users to get it themselves.  
+            See: http://www.ffmpeg.org/legal.html
+            This tries to find where they put it.
+            </summary>
+            <returns>the path, if found, else null</returns>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.ExtractMp3Audio(System.String,System.String,System.Int32,Palaso.Progress.LogBox.IProgress)">
+            <summary>
+            Extracts the audio from a video. Note, it will fail if the file exists, so the client
+            is resonsible for verifying with the user and deleting the file before calling this.
+            </summary>
+            <param name="inputPath"></param>
+            <param name="outputPath"></param>
+            <param name="channels">1 for mono, 2 for stereo</param>
+            <param name="progress"></param>
+            <returns>log of the run</returns>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.ExtractBestQualityWavAudio(System.String,System.String,System.Int32,Palaso.Progress.LogBox.IProgress)">
+            <summary>
+            Extracts the audio from a video. Note, it will fail if the file exists, so the client
+            is responsible for verifying with the user and deleting the file before calling this.
+            </summary>
+            <param name="inputPath"></param>
+            <param name="outputPath"></param>
+            <param name="channels">0 for same, 1 for mono, 2 for stereo</param>
+            <param name="progress"></param>
+            <returns>log of the run</returns>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.ExtractPcmAudio(System.String,System.String,System.Int32,System.Int32,System.Int32,Palaso.Progress.LogBox.IProgress)">
+            <summary>
+            Extracts the audio from a video. Note, it will fail if the file exists, so the client
+            is responsible for verifying with the user and deleting the file before calling this.
+            </summary>
+            <param name="inputPath"></param>
+            <param name="outputPath"></param>
+            <param name="bitsPerSample">e.g. 8, 16, 24, 32</param>
+            <param name="sampleRate">e.g. 22050, 44100, 4800</param>
+            <param name="channels">0 for same, 1 for mono, 2 for stereo</param>
+            <param name="progress"></param>
+            <returns>log of the run</returns>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.ExtractAudio(System.String,System.String,System.String,System.Int32,System.Int32,Palaso.Progress.LogBox.IProgress)">
+            <summary>
+            Extracts the audio from a video. Note, it will fail if the file exists, so the client
+            is responsible for verifying with the user and deleting the file before calling this.
+            </summary>
+            <param name="inputPath"></param>
+            <param name="outputPath"></param>
+            <param name="audioCodec">e.g. copy, pcm_s16le, pcm_s32le, etc.</param>
+            <param name="sampleRate">e.g. 22050, 44100, 4800. Use 0 to use ffmpeg's default</param>
+            <param name="channels">0 for same, 1 for mono, 2 for stereo</param>
+            <param name="progress"></param>
+            <returns>log of the run</returns>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.ChangeNumberOfAudioChannels(System.String,System.String,System.Int32,Palaso.Progress.LogBox.IProgress)">
+            <summary>
+            Creates an audio file, using the received one as the bases, with the specified number
+            of channels. For example, this can be used to convert a 2-channel audio file to a
+            single channel audio file.
+            </summary>
+            <returns>log of the run</returns>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.MakeLowQualityCompressedAudio(System.String,System.String,Palaso.Progress.LogBox.IProgress)">
+            <summary>
+            Converts to low-quality, mono mp3
+            </summary>
+            <returns>log of the run</returns>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.MakeLowQualitySmallVideo(System.String,System.String,System.Int32,Palaso.Progress.LogBox.IProgress)">
+            <summary>
+            Converts to low-quality, small video
+            </summary>
+            <param name="maxSeconds">0 if you don't want to truncate at all</param>
+            <returns>log of the run</returns>
+        </member>
+        <member name="M:Palaso.Media.FFmpegRunner.MakeLowQualitySmallPicture(System.String,System.String,Palaso.Progress.LogBox.IProgress)">
+            <summary>
+            Converts to low-quality, small picture
+            </summary>
+            <returns>log of the run</returns>
+        </member>
+        <member name="P:Palaso.Media.FFmpegRunner.HaveNecessaryComponents">
+            <summary>
+             Returns false if it can't find ffmpeg
+            </summary>
+        </member>
+        <member name="P:Palaso.Media.FFmpegRunner.HaveValidFFMpegOnPath">
+            <summary>
+             Returns false if it can't find ffmpeg
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.Naudio.UI.RecordingDeviceButton.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.RecordingDeviceButton.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Palaso.Media.Naudio.UI.RecordingDeviceButton.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:Palaso.Media.ShortSoundFieldControl.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Palaso.Media.ShortSoundFieldControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Palaso.Media.ShortSoundFieldControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>

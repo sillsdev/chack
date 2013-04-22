@@ -1,0 +1,26 @@
+syntax: glob
+CopyToWeSay.bat
+glob:output/
+glob:obj/
+glob:_Resharper*
+glob:_ReSharper.Chorus VS2008/
+glob:*.suo
+glob:*.user
+glob:CopyToWeSayDev.bat
+glob:lib/Palaso.TestUtilities.pdb
+glob:*~
+glob:*.pidb
+relre:^Mercurial/
+glob:*ReSharper*
+glob:build/old
+glob:lib/$(Configuration)
+glob:*.resources
+glob:*.userprefs
+relre:src/Chorus.Tests/bin/*
+relre:src/ChorusMerge.Tests/bin/*
+relre:src/SampleApp/bin/*
+glob:CopyTo Dev WeSay.bat
+MercurialExtensions/fixutf8/cpmap.pyo
+MercurialExtensions/fixutf8/cpmap.py
+src/LibChorusTests/test-results/LibChorus.Tests.csproj.test-cache
+**.orig

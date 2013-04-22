@@ -1,0 +1,1877 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Palaso.Lift</name>
+    </assembly>
+    <members>
+        <member name="T:Palaso.Lift.Parsing.LiftParser`4">
+            <summary>
+            This class takes a file or DOM of lift and makes calls on a supplied "merger" object for what it finds there.
+            This design allows the same parser to be used for WeSay, FLEx, and unit tests, which all have different
+            domain models which they populate based on these calls.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.#ctor(Palaso.Lift.Parsing.ILexiconMerger{`0,`1,`2,`3})">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.ReadRangeElement(System.String,System.Xml.XmlNode)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.ReadGrammi(`0,System.Xml.XmlNode)">
+            <summary>
+            Read the grammatical-info information for either a sense or a reversal.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.GetTraitList(System.Xml.XmlNode)">
+            <summary>
+            Used for elements with traits that are not top level objects (extensibles) or forms.
+            </summary>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.ReadExtensibleElementBasics(System.Xml.XmlNode)">
+            <summary>
+            read enough for finding a potential match to merge with
+            </summary>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.ReadExtensibleElementDetails(`0,System.Xml.XmlNode)">
+            <summary>
+            Once we have the thing we're creating/merging with, we can read in any details,
+            i.e. traits, fields, and annotations
+            </summary>
+            <param name="target"></param>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.GetOptionalDate(System.Xml.XmlNode,System.String,System.DateTime)">
+            <summary>
+            careful, can't return null, so give MinValue
+            </summary>
+            <param name="xmlNode"></param>
+            <param name="attributeName"></param>
+            <param name="defaultDateTime">the time to use if this attribute isn't found</param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.ReadLiftFile(System.String)">
+            <summary>
+            Read a LIFT file. Must be the current lift version.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.GetEstimatedNumberOfEntriesInFile(System.String)">
+            <summary>
+            Intended to be fast, and only (probably) acurate
+            </summary>
+            <param name="pathToLift"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.GetNodeFromString(System.String)">
+            <summary>
+            used to adapt between the DOM/XmlNode-based stuff John wrote initially, and the Reader-based stuff Steve added
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.ReadExternalRange(System.String,System.String,System.String)">
+            <summary>
+            Read a range from a separate file.
+            </summary>
+            <param name="pathToRangeFile"></param>
+            <param name="rangeId"></param>
+            <param name="rangeGuid"></param>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.NotifyFormatError(System.Exception)">
+            <summary>
+            NB: this will always conver the exception to a LiftFormatException, if it isn't already
+            </summary>
+            <param name="error"></param>
+        </member>
+        <member name="E:Palaso.Lift.Parsing.LiftParser`4.ParsingWarning">
+            <summary></summary>
+        </member>
+        <member name="E:Palaso.Lift.Parsing.LiftParser`4.SetTotalNumberSteps">
+            <summary></summary>
+        </member>
+        <member name="E:Palaso.Lift.Parsing.LiftParser`4.SetStepsCompleted">
+            <summary></summary>
+        </member>
+        <member name="E:Palaso.Lift.Parsing.LiftParser`4.SetProgressMessage">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftParser`4.DefaultCreationModificationUTC">
+            <summary>
+             Get/set the default DateTime value use for creation or modification times.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftParser`4.ChangeDetector">
+            <summary>
+            Optional object that will tell us which entries actually need parsing/adding.
+            NB: it is up to the client of this class to do any deleting that the detector says is needed
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftParser`4.ChangeReport">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftParser`4.StepsArgs">
+            <summary>
+             This class passes on progress report related information to an event handler.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftParser`4.StepsArgs.Steps">
+            <summary>
+             Get/set the current state of the progress bar in number of steps.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftParser`4.ErrorArgs">
+            <summary>
+             This class passes on an exception that has been caught to an event handler.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftParser`4.ErrorArgs.Exception">
+            <summary>
+             Get/set the Exception object being passed.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftParser`4.MessageArgs">
+            <summary>
+             This class passes on a a status message string to an event handler.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftParser`4.MessageArgs.Message">
+            <summary>
+             Get/set the status message string.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftParser`4.ProgressEventArgs">
+            <summary>
+             This class passes on progress/cancel information to an event handler.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftParser`4.ProgressEventArgs.#ctor(System.Int32)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftParser`4.ProgressEventArgs.Progress">
+            <summary>
+             Get the progress value for this event.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftParser`4.ProgressEventArgs.Cancel">
+            <summary>
+             Get/set the cancel flag for this event.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.XmlDiff.DifferenceType">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.ATTR_VALUE_EXPLICITLY_SPECIFIED_ID">
+            <summary>Comparing an implied attribute value against an explicit value</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.ATTR_NAME_NOT_FOUND_ID">
+            <summary>Comparing 2 elements and one has an attribute the other does not</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.ATTR_VALUE_ID">
+            <summary>Comparing 2 attributes with the same name but different values</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.ATTR_SEQUENCE_ID">
+            <summary>Comparing 2 attribute lists with the same attributes in different sequence</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.CDATA_VALUE_ID">
+            <summary>Comparing 2 CDATA sections with different values</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.COMMENT_VALUE_ID">
+            <summary>Comparing 2 comments with different values</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.DOCTYPE_NAME_ID">
+            <summary>Comparing 2 document types with different names</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.DOCTYPE_PUBLIC_ID_ID">
+            <summary>Comparing 2 document types with different public identifiers</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.DOCTYPE_SYSTEM_ID_ID">
+            <summary>Comparing 2 document types with different system identifiers</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.ELEMENT_TAG_NAME_ID">
+            <summary>Comparing 2 elements with different tag names</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.ELEMENT_NUM_ATTRIBUTES_ID">
+            <summary>Comparing 2 elements with different number of attributes</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.PROCESSING_INSTRUCTION_TARGET_ID">
+            <summary>Comparing 2 processing instructions with different targets</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.PROCESSING_INSTRUCTION_DATA_ID">
+            <summary>Comparing 2 processing instructions with different instructions</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.TEXT_VALUE_ID">
+            <summary>Comparing 2 different text values</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.NAMESPACE_PREFIX_ID">
+            <summary>Comparing 2 nodes with different namespace prefixes</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.NAMESPACE_URI_ID">
+            <summary>Comparing 2 nodes with different namespace URIs</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.NODE_TYPE_ID">
+            <summary>Comparing 2 nodes with different node types</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.HAS_CHILD_NODES_ID">
+            <summary>Comparing 2 nodes but only one has any children</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.CHILD_NODELIST_LENGTH_ID">
+            <summary>Comparing 2 nodes with different numbers of children</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.CHILD_NODELIST_SEQUENCE_ID">
+            <summary>Comparing 2 nodes with children whose nodes are in different sequence</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.HAS_DOCTYPE_DECLARATION_ID">
+            <summary>Comparing 2 Documents only one of which has a doctype</summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DifferenceType.HAS_XML_DECLARATION_PREFIX_ID">
+            <summary>Comparing 2 Documents only one of which has an XML Prefix Declaration</summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftGrammaticalInfo">
+            <summary>
+            This class implements "grammatical-info" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftGrammaticalInfo.#ctor">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftGrammaticalInfo.Value">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftGrammaticalInfo.Traits">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftExample">
+            <summary>
+            This class implements "example" from the LIFT standard.
+            It also corresponds to LexExampleSentence in the FieldWorks model.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftObject">
+            <summary>
+            This class implements "extensible" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftObject.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftObject.Id">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftObject.Guid">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftObject.DateCreated">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftObject.DateModified">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftObject.Fields">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftObject.Traits">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftObject.Annotations">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftObject.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftExample.#ctor">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftExample.Source">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftExample.Content">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftExample.Translations">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftExample.Notes">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftExample.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.ILiftMergerTestSuite">
+            <summary>
+            The idea here was to have a way to help implementers know what new tests are needed as the
+            parser grows.  WeSay uses it, but it has not been kept up to date, as of April 2008.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.NewEntryGetsGuid">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.NewEntryWithTextIdIgnoresIt">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.NewEntryTakesGivenDates">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.NewEntryNoDatesUsesNow">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.EntryGetsEmptyLexemeForm">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.NewWritingSystemAlternativeHandled">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.NewEntryGetsLexemeForm">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.EntryWithChildren">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.ModifiedDatesRetained">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.ChangedEntryFound">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.UnchangedEntryPruned">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.EntryWithIncomingUnspecifiedModTimeNotPruned">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILiftMergerTestSuite.MergingSameEntryLackingGuidId_TwiceFindMatch">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.ILiftChangeDetector">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.ILiftChangeDetector.Reset">
+            <summary>
+            Makes the reference data just reflect exactly what is in the lift file.  Only changes made after calling this will be detected.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.ILiftChangeDetector.ClearCache">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.ILiftChangeDetector.GetChangeReport(Palaso.Lift.Merging.IProgress)">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.ILiftChangeDetector.CanProvideChangeRecord">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.LiftChangeDetector">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.LiftChangeDetector.#ctor(System.String,System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.LiftChangeDetector.Reset">
+            <summary>
+            Makes the reference data just reflect exactly what is in the lift file.  Only changes made after calling this will be detected.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.LiftChangeDetector.ClearCache">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.LiftChangeDetector.GetChangeReport(Palaso.Lift.Merging.IProgress)">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.LiftChangeDetector.CanProvideChangeRecord">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.ILiftChangeReport">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.ILiftChangeReport.GetChangeType(System.String)">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.ILiftChangeReport.IdsOfDeletedEntries">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.LiftChangeReport">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.LiftChangeReport.DetermineChanges(System.IO.TextReader,System.IO.TextReader,Palaso.Lift.Merging.IProgress)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.LiftChangeReport.GetChangeType(System.String)">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.LiftChangeReport.IdsOfDeletedEntries">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.LiftChangeReport.ChangeType">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.LiftChangeReport.ChangeType.None">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.LiftChangeReport.ChangeType.Editted">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.LiftChangeReport.ChangeType.New">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.LiftChangeReport.ChangeType.Deleted">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.IProgress">
+            <summary>
+             Minimal interface for progress reporting.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.IProgress.Status">
+            <summary>
+             Get/set the status message for a progress report.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.NullProgress">
+            <summary>
+             Nonfunctional progress reporting class: minimal implementation of IProgress.
+             (possibly useful for tests)
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.NullProgress.Status">
+            <summary></summary>
+        </member>
+        <member name="E:Palaso.Lift.ILiftReader`1.AfterEntryRead">
+            <summary>
+            Subscribe to this event in order to do something (or do something to an entry) as soon as it has been parsed in.
+            WeSay uses this to populate definitions from glosses.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.XmlDiff.Differences">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.Differences.isMajorDifference(Palaso.Lift.Merging.XmlDiff.DifferenceType)">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Options.Option.OptionDisplayProxy">
+            <summary>
+            Gives a monolingual representation of the object for use by a combo-box
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.FlagState">
+            <summary>
+            Holds a boolean value for, for example, a checkbox
+            </summary>
+        </member>
+        <member name="F:Palaso.Lift.FlagState._parent">
+            <summary>
+            This "backreference" is used to notify the parent of changes. 
+            IParentable gives access to this during explicit construction.
+            </summary>
+        </member>
+        <member name="E:Palaso.Lift.FlagState.PropertyChanged">
+            <summary>
+            For INotifyPropertyChanged
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftField">
+            <summary>
+            This class implements "field" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftField.#ctor">
+            <summary>
+             Default Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftField.#ctor(System.String,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftField.Type">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftField.DateCreated">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftField.DateModified">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftField.Traits">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftField.Annotations">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftField.Content">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.XmlDiff.DiffResult">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.DiffResult.#ctor">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.DiffResult.AreIdentical">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.DiffResult.AreEqual">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.DiffResult.Difference">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.DiffResult.StringValue">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftPhonetic">
+            <summary>
+            This class implements "phonetic" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftPhonetic.#ctor">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftPhonetic.Form">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftPhonetic.Media">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftPhonetic.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftSpan">
+            <summary>
+            This class represents the formatting information for a span of text.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftSpan.#ctor(System.Int32,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftSpan.Equals(System.Object)">
+            <summary>This must be overridden for tests to pass.</summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftSpan.GetHashCode">
+            <summary>Keep ReSharper from complaining about Equals().</summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSpan.Index">
+            <summary>
+             Get the index of this span within the overall LiftMultiText string.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSpan.Length">
+            <summary>
+            Get the length of this span.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSpan.Lang">
+            <summary>
+            Get the language of the data in this span.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSpan.Class">
+            <summary>
+            Get the class (style) applied to the data in this span.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSpan.LinkURL">
+            <summary>
+            Get the underlying link URL of this span (if any).
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSpan.Spans">
+            <summary>
+            Return the list of format specifications, if any.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftString">
+            <summary>
+            This class represents a string with optional embedded formatting information.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftString.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftString.#ctor(System.String)">
+            <summary>
+            Constructor with simple C# string data.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftString.Equals(System.Object)">
+            <summary>This must be overridden for tests to pass.</summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftString.GetHashCode">
+            <summary>Keep ReSharper from complaining about Equals().</summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftString.Text">
+            <summary>
+            Get the text of this string.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftString.Spans">
+            <summary>
+            Return the list of format specifications, if any.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftMultiText">
+            <summary>
+            This class represents a multilingual string, possibly with embedded formatting
+            information in each of the alternatives.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.ToString">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.Equals(System.Object)">
+            <summary>This must be overridden for tests to pass.</summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.GetHashCode">
+            <summary>Keep ReSharper from complaining about Equals().</summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.Prepend(System.String,System.String)">
+            <summary>
+            Add data to the beginning of a particular alternative of this LiftMultiText.
+            </summary>
+            <remarks>
+            TODO: update the offsets of any spans after the first in that alternative,
+            and the length of the first span.
+            </remarks>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.AddOrAppend(System.String,System.String,System.String)">
+            <summary>
+            if we already have a form in the lang, add the new one after adding the delimiter e.g. "tube; hose"
+            </summary>
+            <param name="key"></param>
+            <param name="newValue"></param>
+            <param name="delimiter"></param>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.Merge(Palaso.Lift.Parsing.LiftMultiText,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary>
+            Merge another LiftMultiText with a common ancestor into this LiftMultiText.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.LengthOfAlternative(System.String)">
+            <summary>
+            Return the length of the text stored for the given language code, or zero if that
+            alternative doesn't exist.
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.Add(System.String,System.String)">
+            <summary>
+            Add another alternative to this LiftMultiText.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftMultiText.AddSpan(System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Add another span to the given alternative, creating the alternative if needed.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftMultiText.AsSimpleStrings">
+            <summary>
+            For WeSay, which doesn't yet understand structured strings 
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftMultiText.IsEmpty">
+            <summary>
+            Check whether this LiftMultiText is empty.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftMultiText.FirstValue">
+            <summary>
+             Return the first KeyValuePair in this LiftMultiText.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftMultiText.Annotations">
+            <summary>
+            Get/set the annotations for this LiftMultiText.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftMultiText.OriginalRawXml">
+            <summary>
+            Get the original XML string used to initialize this LiftMultiText (if any).
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftEntry">
+            <summary>
+            This class implements "entry" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftEntry.#ctor">
+            <summary>
+             Default constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftEntry.#ctor(Palaso.Lift.Parsing.Extensible,System.Guid,System.Int32)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.Order">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.DateDeleted">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.LexicalForm">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.CitationForm">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.Pronunciations">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.Variants">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.Senses">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.Notes">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.Relations">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.Etymologies">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEntry.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Options.OptionsList">
+            <summary>
+            This is like a PossibilityList in FieldWorks, or RangeSet in Toolbox
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Palaso.Lift.Options.OptionsList.options" -->
+        <member name="T:Palaso.Lift.Options.OptionsListWrapper">
+            <summary>
+            Just makes the xml serialization work right
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftEtymology">
+            <summary>
+            This class implements "etymology" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEtymology.Type">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEtymology.Source">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEtymology.Gloss">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEtymology.Form">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftEtymology.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftAnnotation">
+            <summary>
+            This class implements "annotation" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftAnnotation.Name">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftAnnotation.Value">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftAnnotation.Who">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftAnnotation.When">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftAnnotation.Comment">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.Annotation">
+            <summary>
+             This class implements the LIFT concept of an annotation.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.Annotation.#ctor(System.String,System.String,System.DateTime,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.Annotation.Equals(System.Object)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.Annotation.GetHashCode">
+            <summary>Keep ReSharper from complaining about Equals().</summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Annotation.Name">
+            <summary>
+            Get/set the name of the annotation.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Annotation.LanguageHint">
+            <summary>
+            This is an index into the forms... !!!!!!!this probably not going to really work
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Annotation.Value">
+            <summary>
+            Get/set the value of the annotation.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Annotation.When">
+            <summary>
+            Get/set when the annotation was made.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Annotation.Who">
+            <summary>
+            Get/set who made the annotation.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.MultiText">
+            <summary>
+            MultiText holds an array of LanguageForms, indexed by writing system ID.  
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.MultiText.GetSchema">
+            <summary>
+             required by IXmlSerializable
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.MultiText.ReadXml(System.Xml.XmlReader)">
+            <summary>
+             required by IXmlSerializable.
+             This is wierd and sad, but this is tuned to the format we want in OptionLists.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.MultiText.WriteXml(System.Xml.XmlWriter)">
+            <summary>
+             required by IXmlSerializable.
+             This is wierd and sad, but this is tuned to the format we want in OptionLists.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.MultiText.Parent">
+            <summary>
+            We added this pesky "backreference" solely to enable fast
+            searching in db4o (5.5), which could
+             find strings fast, but can't be queried for the owner
+            quickly, if there is an intervening collection.  Since
+            each string in WeSay is part of a collection of writing
+            system alternatives, that means we can't quickly get
+            an answer, for example, to the question Get all
+            the Entries that contain a senses which have the reversal "cat". 
+            
+            NOW (2009) it is a TODO to look at removing this.
+            
+            Using this field, we can do a query asking for all
+            the LanguageForms matching "cat".
+            This can all be done in a single, fast query.
+             In code, we can then follow the 
+            LanguageForm._parent up to the multitext, then this _parent
+            up to it's owner, etc., on up the hierarchy to get the Entries.
+             
+            Subclasses should provide a property which set the proper class.
+            
+            23 Jan 07, note: starting to switch to using these for notifying parent of changes, too.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.MultiText.ParentAsObject">
+            <summary>
+            Subclasses should provide a "Parent" property which set the proper class.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Migration.Migrator">
+            <summary>
+             This class implements migrating from an older version of LIFT to the current version of
+             LIFT.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Migration.Migrator.IsMigrationNeeded(System.String)">
+            <summary>
+             Check whether the given file needs to be migrated.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Migration.Migrator.MigrateToLatestVersion(System.String)">
+            <summary>
+            Creates a new file migrated to the current version
+            </summary>
+            <returns>the path to the  migrated one, in the same directory</returns>
+        </member>
+        <member name="M:Palaso.Lift.Migration.Migrator.ReverseMigrateFrom13ToFLEx12(System.String,System.String)">
+            <summary>
+             Do a reverse data migration from LIFT 0.13 to LIFT 0.12 as output by FieldWorks
+             Language Explorer.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Utilities">
+            <summary>
+            This contains various static utility methods related to Lift file processing.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Utilities.ProcessLiftForLaterMerging(System.String)">
+            <summary>
+            Add guids
+            </summary>
+            <param name="inputPath"></param>
+            <returns>path to a processed version</returns>
+        </member>
+        <member name="M:Palaso.Lift.Utilities.CreateEmptyLiftFile(System.String,System.String,System.Boolean)">
+            <summary>
+             Create an empty Lift file, unless a file of the given name exists already and
+             doOverwriteIfExists is false.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Utilities.AreXmlElementsEqual(System.String,System.String)">
+            <summary>
+            Check wether the two XML elements (given as strings) are equal.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Utilities.AreXmlElementsEqual(System.Xml.XmlNode,System.Xml.XmlNode)">
+            <summary>
+            Check whether the two XML elements are equal.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Utilities.GetStringAttribute(System.Xml.XmlNode,System.String)">
+            <summary>
+            Get an attribute value from the XML element, or throw an exception if it isn't there.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Utilities.GetOptionalAttributeString(System.Xml.XmlNode,System.String)">
+            <summary>
+            Get an attribute value from the XML element, or return null if it isn't there.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Utilities.MakeSafeXmlAttribute(System.String)">
+            <summary>
+            Make the string safe for writing in an XML attribute value.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Utilities.GetDocumentNodeFromRawXml(System.String,System.Xml.XmlNode)">
+            <summary>
+            Parse a string into a new XmlNode that belongs to the same XmlDocument as
+            nodeMaker (which may be either the XmlDocument or a child XmlNode).
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftTranslation">
+            <summary>
+            This class implements "translation" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftTranslation.Type">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftTranslation.Content">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.PalasoDataObject._parent">
+            <summary>
+            see comment on _parent field of MultiText for an explanation of this field
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.PalasoDataObject.FinishActivation">
+            <summary>
+            Do the non-db40-specific parts of becoming activated
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.PalasoDataObject.SomethingWasModified(System.String)">
+            <summary>
+            called by the binding list when senses are added, removed, reordered, etc.
+            Also called when the user types in fields, etc.
+            </summary>
+            <remarks>The only side effect of this should be to update the dateModified fields</remarks>
+        </member>
+        <member name="M:Palaso.Lift.PalasoDataObject.RemoveEmptyProperties">
+            <summary>
+            BE CAREFUL about when this is called. Empty properties *should exist*
+            as long as the record is being editted
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.PalasoDataObject.GetProperty``1(System.String)">
+            <summary>
+            Will return null if not found
+            </summary>
+            <typeparam name="TContents"></typeparam>
+            <returns>null if not found</returns>
+        </member>
+        <member name="M:Palaso.Lift.PalasoDataObject.MergeProperty(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <summary>
+            Merge in a property from some other object, e.g., when merging senses
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.PalasoDataObject.SetFlag(System.String)">
+             <summary>
+             
+             </summary>
+            <remarks>Seting a flag is represented by creating a property and giving it a "set"
+             value, though that is not really meaningful (there are no other possible values).</remarks>
+             <param name="propertyName"></param>
+        </member>
+        <member name="M:Palaso.Lift.PalasoDataObject.ClearFlag(System.String)">
+            <summary>
+            
+            </summary>
+            <remarks>Clearing a flag is represented by just removing the property, if it exists</remarks>
+            <param name="propertyName"></param>
+        </member>
+        <member name="P:Palaso.Lift.PalasoDataObject.Parent">
+            <summary>
+            see comment on _parent field of MultiText for an explanation of this field
+            </summary>
+        </member>
+        <member name="E:Palaso.Lift.PalasoDataObject.PropertyChanged">
+            <summary>
+            For INotifyPropertyChanged
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.ListEventHelper">
+            <summary>
+            This class enables creating the necessary event subscriptions. It was added
+            before we were forced to add "parent" fields to everything.  I could probably
+            be removed now, since that field could be used by children to cause the wiring,
+            but we are hoping that the parent field might go away with future version of db4o.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftSense">
+            <summary>
+            This class implements "sense" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftSense.#ctor">
+            <summary>
+             Default constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftSense.#ctor(Palaso.Lift.Parsing.Extensible,System.Guid,Palaso.Lift.Parsing.LiftObject)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Order">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.GramInfo">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Gloss">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Definition">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Relations">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Notes">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Examples">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Reversals">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Illustrations">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Subsenses">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.OwningEntry">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.Owner">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftSense.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.ILexiconMerger`4">
+            <summary>
+            Use with the LiftParser (but conceivably other drivers). Allows the same parser
+            to push LIFT data into multiple systems, e.g. WeSay and FLEx.  Also decouples
+            different versions of the lift-specific parser from the model-specific stuff,
+            so either can change or have multiple implementations.
+            
+            The name is somewhat misleading; this isn't about merging two lift files. Rather
+            it is about pushing the output of the parser into some other object graph/database.
+            If that graph/database isn't initially empty, then an implementation of this
+            should be "merging" the incoming data into the existing db, hence the current
+            name.  WeSay, for one, always starts with an empty DB when parsing a LIFT file,
+            so it never actually does merging with its implementation of this.
+            But perhaps a better name would be ILiftPusher?
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.GetOrMakeEntry(Palaso.Lift.Parsing.Extensible,System.Int32)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.EntryWasDeleted(Palaso.Lift.Parsing.Extensible,System.DateTime)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.GetOrMakeSense(`1,Palaso.Lift.Parsing.Extensible,System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.GetOrMakeSubsense(`2,Palaso.Lift.Parsing.Extensible,System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.GetOrMakeExample(`2,Palaso.Lift.Parsing.Extensible)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInLexemeForm(`1,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInCitationForm(`1,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInPronunciation(`1,Palaso.Lift.Parsing.LiftMultiText,System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInVariant(`1,Palaso.Lift.Parsing.LiftMultiText,System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInGloss(`2,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInDefinition(`2,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInPicture(`2,System.String,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInExampleForm(`3,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInTranslationForm(`3,System.String,Palaso.Lift.Parsing.LiftMultiText,System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInSource(`3,System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.FinishEntry(`1)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInField(`0,System.String,System.DateTime,System.DateTime,Palaso.Lift.Parsing.LiftMultiText,System.Collections.Generic.List{Palaso.Lift.Parsing.Trait})">
+            <summary>
+            Handle LIFT's "field" entity which can be found on any subclass of "extensible"
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInTrait(`0,Palaso.Lift.Parsing.Trait)">
+            <summary>
+            Handle LIFT's "trait" entity,
+            which can be found on any subclass of "extensible", on any "field", and as
+            a subclass of "annotation".
+            Note, currently (mar 2007), traits inside forms are instead provided through the LiftMultiText
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInRelation(`0,System.String,System.String,System.String)">
+            <summary>
+            Handle LIFT's "relation" entity (currently missing several attributes)
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInNote(`0,System.String,Palaso.Lift.Parsing.LiftMultiText,System.String)">
+            <summary>
+            Handle LIFT's "note" entity. NB: This may be called multiple times (w/ different notes).
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInMedia(`0,System.String,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary>
+            Handle LIFT's "media" entity.  This is currently used only inside "pronunciation".
+            </summary>
+            <param name="pronunciation">the owning object, probably a pronunciation</param>
+            <param name="href"></param>
+            <param name="caption"></param>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInGrammaticalInfo(`0,System.String,System.Collections.Generic.List{Palaso.Lift.Parsing.Trait})">
+            <summary>
+            Handle LIFT's "grammatical-info" entity.  Note that this can occur in a "sense" (or
+            "subsense") or in a "reversal".
+            </summary>
+            <param name="senseOrReversal"></param>
+            <param name="val"></param>
+            <param name="traits"></param>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.GetOrMakeParentReversal(`0,Palaso.Lift.Parsing.LiftMultiText,System.String)">
+            <summary>
+            Handle a "main" element inside a "reversal" element (possibly nested inside multiple
+            levels of "main").
+            </summary>
+            <param name="parent">the owning object, either a sense or a reversal</param>
+            <param name="contents"></param>
+            <param name="type"></param>
+            <returns>the reversal object</returns>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInReversal(`2,`0,Palaso.Lift.Parsing.LiftMultiText,System.String,System.String)">
+            <summary>
+            Handle LIFT's "reversal" entity.
+            </summary>
+            <param name="sense"></param>
+            <param name="parent">the parent reversal object, or null if owned by the sense</param>
+            <param name="contents"></param>
+            <param name="type"></param>
+            <param name="rawXml">full XML of range-element in case extensible information is given</param>
+            <returns>the reversal object</returns>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.MergeInEtymology(`1,System.String,System.String,Palaso.Lift.Parsing.LiftMultiText,Palaso.Lift.Parsing.LiftMultiText,System.String)">
+            <summary>
+            Handle LIFT's "etymology" entity.
+            </summary>
+            <param name="entry">the owning entry</param>
+            <param name="source">language of the form</param>
+            <param name="type">either "proto" or "borrowed" (or possibly ?)</param>
+            <param name="form">not really multilingual, should have exactly one value</param>
+            <param name="gloss"></param>
+            <param name="rawXml">full XML of range-element in case extensible information is given</param>
+            <returns>the etymology object</returns>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.ProcessRangeElement(System.String,System.String,System.String,System.String,Palaso.Lift.Parsing.LiftMultiText,Palaso.Lift.Parsing.LiftMultiText,Palaso.Lift.Parsing.LiftMultiText,System.String)">
+            <summary>
+            Process a range element from the header (possibly from a separate range file).  The
+            application may totally ignore this information if it so desires...
+            </summary>
+            <param name="range">identifier of the range this range-element belongs to</param>
+            <param name="id">identifier string of this particular range-element</param>
+            <param name="guid">guid associated with this range element (optional for some ranges)</param>
+            <param name="parent">owning range-element (or null if owned directly by range)</param>
+            <param name="description">description of this range element</param>
+            <param name="label">also known as "name" in some programs</param>
+            <param name="abbrev">abbreviation for referring to this range-element</param>
+            <param name="rawXml">full XML of range-element in case extensible information is given</param>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.ILexiconMerger`4.ProcessFieldDefinition(System.String,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary>
+            Process a field definition from the header.  The application may totally ignore this
+            information if it so desires...
+            </summary>
+            <param name="tag"></param>
+            <param name="description"></param>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.Extensible">
+            <summary>
+            This implements the attributes that belong to the LIFT concept of "extensible".
+            </summary>
+        </member>
+        <member name="F:Palaso.Lift.Parsing.Extensible.LiftTimeFormatWithTimeZone">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.Parsing.Extensible.LiftTimeFormatNoTimeZone">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.Parsing.Extensible.LiftDateOnlyFormat">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.Extensible.#ctor">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.Extensible.ParseDateTimeCorrectly(System.String)">
+            <summary>
+             Try to parse a date/time string using one of the three allowed formats.
+            </summary>
+            <exception cref="T:Palaso.Lift.LiftFormatException"></exception>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.Extensible.ToString">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Extensible.CreationTime">
+            <summary>
+             Get/set the creation time (if any) of this object.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Extensible.ModificationTime">
+            <summary>
+             Get/set the modification time (if any) of this object.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Extensible.Id">
+            <summary>
+             Get/set the id tag of this object.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Extensible.Guid">
+            <summary>
+             Get/set the Guid value of this object.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.LiftDataMapper`1.CustomizeReader(Palaso.Lift.ILiftReader{`0})">
+            <summary>
+            for subclasses
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Palaso.Lift.LiftDataMapper`1.MergeIncrementFiles">
+            <summary>
+            
+            </summary>
+            <returns>false if it failed (and it would have already reported the error)</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Palaso.Lift.LiftDataMapper`1.UnLockLift" -->
+        <member name="T:Palaso.Lift.Merging.XmlDiff.XmlDiff">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlDiff.#ctor(Palaso.Lift.Merging.XmlDiff.XmlInput,Palaso.Lift.Merging.XmlDiff.XmlInput,Palaso.Lift.Merging.XmlDiff.DiffConfiguration)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlDiff.#ctor(Palaso.Lift.Merging.XmlDiff.XmlInput,Palaso.Lift.Merging.XmlDiff.XmlInput)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlDiff.#ctor(System.IO.TextReader,System.IO.TextReader)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlDiff.#ctor(System.String,System.String)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlDiff.Compare">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.XmlDiff.OptionalDescription">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftVariant">
+            <summary>
+            This class implements "variant" from the LIFT standard.  (It represents an allomorph, not what
+            FieldWorks understands to be a Variant.)
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftVariant.#ctor">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftVariant.Ref">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftVariant.Form">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftVariant.Pronunciations">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftVariant.Relations">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftVariant.RawXml">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftVariant.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftTrait">
+            <summary>
+            This class implements "trait" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftTrait.#ctor">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftTrait.Name">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftTrait.Value">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftTrait.Id">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftTrait.Annotations">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftReversal">
+            <summary>
+            This class implements "reversal" from the LIFT standard.
+            It also roughly corresponds to ReversalIndexEntry in the FieldWorks model.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftReversal.Type">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftReversal.Form">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftReversal.Main">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftReversal.GramInfo">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftReversal.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftRelation">
+            <summary>
+            This class implements "relation" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftRelation.#ctor">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftRelation.Type">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftRelation.Ref">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftRelation.Order">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftRelation.Usage">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftRelation.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.XmlDiff.Difference">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.Difference.#ctor(Palaso.Lift.Merging.XmlDiff.DifferenceType)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.Difference.#ctor(Palaso.Lift.Merging.XmlDiff.DifferenceType,System.Xml.XmlNodeType,System.Xml.XmlNodeType)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.Difference.ToString">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.Difference.DiffType">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.Difference.HasMajorDifference">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.Difference.ControlNodeType">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.Difference.TestNodeType">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.PictureRef._parent">
+            <summary>
+            This "backreference" is used to notify the parent of changes. 
+            IParentable gives access to this during explicit construction.
+            </summary>
+        </member>
+        <member name="E:Palaso.Lift.PictureRef.PropertyChanged">
+            <summary>
+            For INotifyPropertyChanged
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.Trait">
+            <summary>
+            This class implements the LIFT concept of a trait.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.Trait.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.Trait.Equals(System.Object)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.Trait.GetHashCode">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Trait.Name">
+            <summary>
+            Get/set the name of the trait.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Trait.Value">
+            <summary>
+            Get/set the value of the trait.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Trait.LanguageHint">
+            <summary>
+            This is an index into the forms... !!!!!!!this probably not going to really work
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.Trait.Annotations">
+            <summary>
+            Get/set the list of annotations for this trait.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftNote">
+            <summary>
+            This class implements "note" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftNote.#ctor">
+            <summary>
+             Default constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Parsing.LiftNote.#ctor(System.String,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftNote.Type">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftNote.Content">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftNote.XmlTag">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.SynchronicMerger">
+            <summary>
+            Class to merge two or more LIFT files that are created incrementally, such that
+            1) the data in previous ones is overwritten by data in newer ones
+            2) the *entire contents* of the new entry element replaces the previous contents
+            I.e., merging is only on an entry level.
+            </summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.SynchronicMerger.ExtensionOfIncrementalFiles">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.SynchronicMerger.MergeUpdatesIntoFile(System.String)">
+            <summary>
+            
+            </summary>
+            <exception cref="T:System.IO.IOException">If file is locked</exception>
+            <exception cref="T:Palaso.Lift.LiftFormatException">If there is an error and then file is found to be non-conformant.</exception>
+            <param name="pathToBaseLiftFile"></param>
+        </member>
+        <member name="M:Palaso.Lift.Merging.SynchronicMerger.GetPendingUpdateFiles(System.String)">
+            <summary>
+            </summary>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Palaso.Lift.Merging.SynchronicMerger.TestWritingFile">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.LiftFormatException">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.LiftFormatException.#ctor(System.String)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.LiftFormatException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.LiftFormatException.FilePath">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.BadUpdateFileException">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.BadUpdateFileException.#ctor(System.String,System.String,System.Exception)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.BadUpdateFileException.PathToOldFile">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.BadUpdateFileException.PathToNewFile">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Validation.IValidationProgress">
+            <summary>
+            Provide progress reporting for validation.
+            </summary>
+            <remarks>TODO: provide a single IProgressReport interface for Palaso.Lift (or Palaso?).</remarks>
+        </member>
+        <member name="M:Palaso.Lift.Validation.IValidationProgress.Step(System.Int32)">
+            <summary>
+             Advance the progress bar n steps.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Validation.IValidationProgress.Status">
+            <summary>
+             Get/set the progress message.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Validation.IValidationProgress.MaxRange">
+            <summary>
+            Set the number of steps in the progress bar.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Validation.NullValidationProgress">
+            <summary>
+            Trivial, nonfunctional implementation of IValidationProgress.
+            </summary>
+            <remarks>
+            TODO: provide a single IProgressReport interface for Palaso.Lift (or Palaso?), and a single trivial
+            implementation thereof.
+            </remarks>
+        </member>
+        <member name="M:Palaso.Lift.Validation.NullValidationProgress.Step(System.Int32)">
+            <summary>
+            Advance the progress bar by n steps.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Validation.NullValidationProgress.Status">
+            <summary>
+            Get/set the status message string.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Validation.NullValidationProgress.MaxRange">
+            <summary>
+            Get/set the number of steps in the progress bar.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Validation.Validator">
+            <summary>
+             This class provides validation (via built-in RNG schema) of a LIFT file.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Validation.Validator.GetAnyValidationErrors(System.String,Palaso.Lift.Validation.IValidationProgress,Palaso.Lift.Validation.ValidationOptions)">
+            <summary>
+             Parse the given LIFT file and return a string containing all the validation errors
+             (if any).  Progress reporting is supported.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Validation.Validator.GetSchemaValidationErrors(System.String,Palaso.Lift.Validation.IValidationProgress)">
+            <summary>
+             Validate the LIFT file contained in the XmlTextReader.  Progress reporting is
+             supported.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Validation.Validator.CheckLiftWithPossibleThrow(System.String)">
+            <summary>
+             Check the given LIFT file for validity, throwing an exception if an error is found.
+             Progress reporting is supported.
+            </summary>
+            <exception cref="T:Palaso.Lift.LiftFormatException"></exception>
+        </member>
+        <member name="M:Palaso.Lift.Validation.Validator.GetLiftVersion(System.String)">
+            <summary>
+             Get the LIFT version of the given file, throwing an exception if it cannot be found.
+            </summary>
+            <exception cref="T:Palaso.Lift.LiftFormatException"></exception>
+        </member>
+        <member name="P:Palaso.Lift.Validation.Validator.LiftVersion">
+            <summary>
+             Get the LIFT version handled by this code in the form of a string.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Validation.ValidationProgress">
+            <summary>
+            I don't know how I ended up with these different progress models, but anyhow this adapts from the normal, log-based one to the Validation one needed by the validator.
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.XmlDiff.DiffConfiguration">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.DEFAULT_WHITESPACE_HANDLING">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.DEFAULT_DESCRIPTION">
+            <summary></summary>
+        </member>
+        <member name="F:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.DEFAULT_USE_VALIDATING_PARSER">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.#ctor(System.String,System.Boolean,System.Xml.WhitespaceHandling)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.#ctor(System.String,System.Xml.WhitespaceHandling)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.#ctor(System.Xml.WhitespaceHandling)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.#ctor(System.String)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.#ctor(System.Boolean)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.#ctor">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.Description">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.UseValidatingParser">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Merging.XmlDiff.DiffConfiguration.WhitespaceHandling">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Parsing.LiftUrlRef">
+            <summary>
+            This class implements "URLRef" from the LIFT standard.
+            </summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftUrlRef.Url">
+            <summary></summary>
+        </member>
+        <member name="P:Palaso.Lift.Parsing.LiftUrlRef.Label">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Merging.XmlDiff.XmlInput">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.#ctor(System.String,System.String)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.#ctor(System.String)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.#ctor(System.IO.Stream,System.String)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.#ctor(System.IO.Stream)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.#ctor(System.IO.TextReader,System.String)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.#ctor(System.IO.TextReader)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.#ctor(System.Xml.XmlReader)">
+            <summary>
+             Constructor.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.CreateXmlReader">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.Equals(System.Object)">
+            <summary></summary>
+        </member>
+        <member name="M:Palaso.Lift.Merging.XmlDiff.XmlInput.GetHashCode">
+            <summary></summary>
+        </member>
+        <member name="T:Palaso.Lift.Options.OptionRefCollection">
+            <summary>
+            Used to refer to this option from a field
+            </summary>
+        </member>
+        <member name="F:Palaso.Lift.Options.OptionRefCollection._whomToNotify">
+            <summary>
+            This "backreference" is used to notify the parent of changes. 
+            IParentable gives access to this during explicit construction.
+            </summary>
+        </member>
+        <member name="M:Palaso.Lift.Options.OptionRefCollection.Remove(System.String)">
+            <summary>
+            Removes a key from the OptionRefCollection
+            </summary>
+            <param name="key">The OptionRef key to be removed</param>
+            <returns>true when removed, false when doesn't already exists in collection</returns>
+        </member>
+        <member name="M:Palaso.Lift.Options.OptionRefCollection.Add(System.String)">
+            <summary>
+            Adds a key to the OptionRefCollection
+            </summary>
+            <param name="key">The OptionRef key to be added</param>
+            <returns>true when added, false when already exists in collection</returns>
+        </member>
+        <member name="M:Palaso.Lift.Options.OptionRefCollection.AddRange(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Adds a set of keys to the OptionRefCollection
+            </summary>
+            <param name="keys">A set of keys to be added</param>
+        </member>
+        <member name="E:Palaso.Lift.Options.OptionRefCollection.PropertyChanged">
+            <summary>
+            For INotifyPropertyChanged
+            </summary>
+        </member>
+        <member name="T:Palaso.Lift.Options.OptionRef">
+            <summary>
+            Used to refer to this option from a field. 
+            This class just wraps the key, which is a string, with various methods to make it fit in
+            with the system.
+            </summary>
+        </member>
+        <member name="F:Palaso.Lift.Options.OptionRef._parent">
+            <summary>
+            This "backreference" is used to notify the parent of changes. 
+            IParentable gives access to this during explicit construction.
+            </summary>
+        </member>
+        <member name="E:Palaso.Lift.Options.OptionRef.PropertyChanged">
+            <summary>
+            For INotifyPropertyChanged
+            </summary>
+        </member>
+    </members>
+</doc>

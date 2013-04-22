@@ -1,0 +1,389 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Palaso.DictionaryServices</name>
+    </assembly>
+    <members>
+        <member name="M:Palaso.DictionaryServices.Model.LexExampleSentence.#ctor">
+            <summary>
+            Used when a list of these items adds via "AddNew", where we have to have a default constructor.
+            The parent is added in an even handler, on the parent, which is called by the list.
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexExampleSentence.TranslationType">
+            <summary>
+            Supports round-tripping, though we don't use it
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexRelation.Key">
+            <summary>
+            Set to string.emtpy to clear the relation
+            </summary>
+        </member>
+        <member name="E:Palaso.DictionaryServices.Model.LexRelation.PropertyChanged">
+            <summary>
+            Occurs when a property value changes.
+            </summary>
+            
+        </member>
+        <member name="T:Palaso.DictionaryServices.Model.LexReversal">
+            <summary>
+            Not implemented: main (waiting on liftwriter support)
+            Not implemented: grammatical-info
+            Not implemented: extensible.date
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexReversal.Type">
+            <summary>
+            From a reversal-type rangeset
+            </summary>
+        </member>
+        <member name="T:Palaso.DictionaryServices.Lift.LexEntryFromLiftBuilder">
+            <summary>
+            This class is called by the LiftParser, as it encounters each element of a lift file.
+            There is at least one other ILexiconMerger, used in FLEX.
+            
+            NB: In WeSay, we don't really use this to "merge in" elements, since we start from
+            scratch each time we read a file. But in FLEx it is currently used that way, hence
+            we haven't renamed the interface (ILexiconMerger).
+            </summary>
+            
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LexEntryFromLiftBuilder.MergeInNote(Palaso.Lift.PalasoDataObject,System.String,Palaso.Lift.Parsing.LiftMultiText,System.String)">
+            <summary>
+            Handle LIFT's "note" entity
+            </summary>
+            <remarks>The difficult thing here is we don't handle anything but a default note.
+            Any other kind, we put in the xml residue for round-tripping.</remarks>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LexEntryFromLiftBuilder.MergeInField(Palaso.Lift.PalasoDataObject,System.String,System.DateTime,System.DateTime,Palaso.Lift.Parsing.LiftMultiText,System.Collections.Generic.List{Palaso.Lift.Parsing.Trait})">
+            <summary>
+            Handle LIFT's "field" entity which can be found on any subclass of "extensible"
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LexEntryFromLiftBuilder.MergeInTrait(Palaso.Lift.PalasoDataObject,Palaso.Lift.Parsing.Trait)">
+            <summary>
+            Handle LIFT's "trait" entity, 
+            which can be found on any subclass of "extensible", on any "field", and as
+            a subclass of "annotation".
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LexEntryFromLiftBuilder.MergeInMedia(Palaso.Lift.PalasoDataObject,System.String,Palaso.Lift.Parsing.LiftMultiText)">
+            <summary>
+            We do this because in linguist tools, there is a distinction that we don't want to 
+            normally make in WeSay.  There, "gloss" is the first pass at a definition, but its
+            really just for interlinearlization.  That isn't a distinction we want our user
+            to bother with.
+            </summary>
+            <param name="entry"></param>
+        </member>
+        <member name="E:Palaso.DictionaryServices.Lift.LexEntryFromLiftBuilder.AfterEntryRead">
+            <summary>
+            Subscribe to this event in order to do something (or do something to an entry) as soon as it has been parsed in.
+            WeSay uses this to populate definitions from glosses.
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LiftWriter.#ctor(System.String,Palaso.DictionaryServices.Lift.LiftWriter.ByteOrderStyle)">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+            <param name="includeByteOrderMark">PrinceXML (at least v7 chokes if given a BOM, Lexique Pro chokes without it) </param>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LiftWriter.InsertPronunciationIfNeeded(Palaso.DictionaryServices.Model.LexEntry,System.Collections.Generic.List{System.String})">
+            <summary>
+            in the plift subclass, we add a pronounciation if we have an audio writing system alternative on the lexical unit
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LiftWriter.GetHumanReadableIdWithAnyIllegalUnicodeEscaped(Palaso.DictionaryServices.Model.LexEntry,System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Get a human readable identifier for this entry taking into account all the rest of the
+            identifiers that this has seen
+            </summary>
+            <param name="entry">the entry to </param>
+            <param name="idsAndCounts">the base ids that have been used so far and how many times</param>
+            <remarks>This function alters the idsAndCounts and thus is not stable if the entry 
+            does not already have an id and the same idsAndCounts dictionary is provided.
+            A second call to this function with the same entry that lacks an id and the same
+            idsAndCounts will produce different results each time it runs
+            </remarks>
+            <returns>A base id composed with its count</returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LiftWriter.GetOrderedAndFilteredForms(Palaso.Text.MultiTextBase,System.String)">
+            <summary>
+            this base implementationg is for when we're just exporting to lift, and dont' want to filter or order.
+            It is overridden in a child class for writing presentation-ready lift, when 
+            we do want to filter and order
+            </summary>
+            <param name="text"></param>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LiftWriter.WriteRelationTarget(Palaso.DictionaryServices.Model.LexRelation)">
+            <summary>
+            allows subclass to output a dereferenced target name, e.g., for plift
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Palaso.DictionaryServices.Lift.LiftReader._idsOfSingleOptionFields" -->
+        <member name="M:Palaso.DictionaryServices.Lift.LiftReader.OnAfterEntryRead(System.Object,Palaso.DictionaryServices.Lift.LexEntryFromLiftBuilder.EntryEvent)">
+            <summary>
+            this just passes on the event to our client, who can't directly access the LexEntryFromLiftBuilder
+            </summary>
+        </member>
+        <member name="E:Palaso.DictionaryServices.Lift.LiftReader.AfterEntryRead">
+            <summary>
+            Subscribe to this event in order to do something (or do something to an entry) as soon as it has been parsed in.
+            WeSay uses this to populate definitions from glosses.
+            </summary>
+        </member>
+        <member name="T:Palaso.DictionaryServices.Model.LexEntry">
+            <summary>
+            A Lexical Entry is what makes up our lexicon/dictionary.  In 
+            some languages/dictionaries, these will be indistinguishable from "words".
+            In others, words are made up of lexical entries.
+            </summary>
+        </member>
+        <member name="F:Palaso.DictionaryServices.Model.LexEntry._id">
+            <summary>
+            This use for keeping track of the item when importing an then exporting again, 
+            like for merging. The user doesn't edit this, and if it is null that's fine,
+            the exporter will make up a reasonable one.
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Model.LexEntry.GetHeadWordForm(System.String)">
+            <summary>
+            this is safer
+            </summary>
+            <param name="writingSystemId"></param>
+            <returns>string.emtpy if no headword</returns>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.LexicalForm">
+            <summary>
+            
+            </summary>
+            <remarks>The signature here is MultiText rather than LexicalFormMultiText because we want
+            to hide this (hopefully temporary) performance implementation detail. </remarks>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.Variants">
+            <summary>
+            NOTE: in oct 2010, wesay does not yet use this field, but SOLID does
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.Notes">
+            <summary>
+            NOTE: in oct 2010, wesay does not yet use this field, as it only handles a single, typeless note and uses the well-known-properties approach
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.Pronunciations">
+            <summary>
+            NOTE: in oct 2010, wesay does not yet use this field, but SOLID does
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.Etymologies">
+            <summary>
+            NOTE: in oct 2010, wesay does not yet use this field, but SOLID does
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.Guid">
+            <summary>
+            Used to track this entry across programs, for the purpose of merging and such.
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.Id">
+            <summary>
+            This use for keeping track of the item when importing an then exporting again, 
+            like for merging. Also used for relations (e.g. superentry). we purposefully
+            delay making one of these (if we aren't contructed with one) in order to give
+            time to get a LexemeForm to make the id more readable.
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.IsEmptyExceptForLexemeFormForPurposesOfDeletion">
+            <summary>
+            checks if it looks like the user has added info. this is used when changing spelling
+            in a word-gathering task
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.IsBeingDeleted">
+            <summary>
+            this is used to prevent things like cleanup of an object that is being deleted, which
+            can lead to update notifications that get the dispossed entry back in the db, or in some cache
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.ModifiedTimeIsLocked">
+            <summary>
+            used during import so we don't accidentally change the modified time while building up the entry
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEntry.OrderForRoundTripping">
+            <summary>
+            The name here is to remind us that our homograph number 
+            system doesn't know how to take this into account
+            </summary>
+        </member>
+        <member name="T:Palaso.DictionaryServices.Model.LexNote">
+            <summary>
+            A note is used for storing descriptive information of many kinds including comments, bibliographic information and domain specific notes. Notes are used to hold informational content rather than meta-information about an element, for which an annotation should be used.
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexNote.Type">
+            <summary>
+            Not implemented: extensible.date
+            </summary>
+        </member>
+        <member name="T:Palaso.DictionaryServices.Model.LexPhonetic">
+            <summary>
+            Not implemented: media
+            Not implemented: extensible.date
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetAllEntriesSortedByHeadword(Palaso.WritingSystems.WritingSystemDefinition)">
+            <summary>
+            Gets a ResultSet containing all entries sorted by citation if one exists and otherwise
+            by lexical form.
+            Use "Form" to access the headword in a RecordToken.
+            </summary>
+            <param name="writingSystemDefinition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetAllEntriesSortedByLexicalFormOrAlternative(Palaso.WritingSystems.WritingSystemDefinition)">
+            <summary>
+            Gets a ResultSet containing all entries sorted by lexical form for a given writing system.
+            If a lexical form for a given writingsystem does not exist we substitute one from another writingsystem.
+            Use "Form" to access the lexical form in a RecordToken.
+            </summary>
+            <param name="writingSystemDefinition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetAllEntriesSortedByLexicalForm(Palaso.WritingSystems.WritingSystemDefinition)">
+            <summary>
+            Gets a ResultSet containing all entries sorted by lexical form for a given writing system.
+            Use "Form" to access the lexical form in a RecordToken.
+            </summary>
+            <param name="writingSystemDefinition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetAllEntriesSortedByDefinitionOrGloss(Palaso.WritingSystems.WritingSystemDefinition)">
+            <summary>
+            Gets a ResultSet containing all entries sorted by definition and gloss. It will return both the definition
+            and the gloss if both exist and are different.
+            Use "Form" to access the Definition/Gloss in RecordToken.
+            </summary>
+            <param name="writingSystemDefinition"></param>
+            <returns>Definition and gloss in "Form" field of RecordToken</returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetEntriesWithSemanticDomainSortedBySemanticDomain(System.String)">
+            <summary>
+            Gets a ResultSet containing entries that contain a semantic domain assigned to them 
+            sorted by semantic domain.
+            Use "SemanticDomain" to access the semantic domain in a RecordToken.
+            </summary>
+            <param name="fieldName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetEntriesWithMatchingGlossSortedByLexicalForm(Palaso.Text.LanguageForm,Palaso.WritingSystems.WritingSystemDefinition)">
+            <summary>
+            Gets a ResultSet containing entries whose gloss match glossForm sorted by the lexical form
+            in the given writingsystem.
+            Use "Form" to access the lexical form and "Gloss/Form" to access the Gloss in a RecordToken.
+            </summary>
+            <param name="glossForm"></param>
+            <param name="lexicalUnitWritingSystemDefinition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetLexEntryWithMatchingId(System.String)">
+            <summary>
+            Gets the LexEntry whose Id matches id.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetLexEntryWithMatchingGuid(System.Guid)">
+            <summary>
+            Gets the LexEntry whose Guid matches guid.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetEntriesWithSimilarLexicalForm(System.String,Palaso.WritingSystems.WritingSystemDefinition,Palaso.Text.ApproximateMatcherOptions)">
+            <summary>
+            Gets a ResultSet containing entries whose lexical form is similar to lexicalForm 
+            sorted by the lexical form in the given writingsystem.
+            Use "Form" to access the lexical form in a RecordToken.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Palaso.DictionaryServices.LiftLexEntryRepository.GetEntriesWithMatchingLexicalForm(System.String,Palaso.WritingSystems.WritingSystemDefinition)">
+            <summary>
+            Gets a ResultSet containing entries whose lexical form match lexicalForm
+            Use "Form" to access the lexical form in a RecordToken.
+            </summary>
+            <param name="lexicalForm"></param>
+            <param name="writingSystemDefinition"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Palaso.DictionaryServices.Processors.HomographMerger">
+            <summary>
+            This is used by the "LiftTools" application. It finds all the homographs in 
+            a lexicon, and merges them if it can. It also merges their senses, if it can.
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Processors.HomographMerger.MergeSensesWithinEntries(Palaso.DictionaryServices.LiftLexEntryRepository,System.String[],Palaso.Progress.LogBox.IProgress)">
+            <summary>
+            it can happen that within a single entry, you can have mergable senses.
+            </summary>
+        </member>
+        <member name="T:Palaso.DictionaryServices.Model.LexEtymology">
+            <summary>
+            Not implemented: media
+            Not implemented: extensible.date
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexEtymology.Comment">
+            <summary>
+            as of lift 0.13, this doesn't exist, so the writer will have to make a <field/> or something
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Model.LexSense.#ctor">
+            <summary>
+            Used when a list of these items adds via "AddNew", where we have to have a default constructor.
+            The parent is added in an event handler, on the parent, which is called by the list.
+            </summary>
+        </member>
+        <member name="P:Palaso.DictionaryServices.Model.LexSense.Notes">
+            <summary>
+            NOTE: in oct 2010, wesay does not yet use this field, as it only handles a single, typeless note and uses the well-known-properties approach
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.LiftDataMapper.#ctor(System.String)">
+            <summary>
+            unit tests only
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="T:Palaso.DictionaryServices.Lift.WeSayLiftDataMapper">
+            <summary>
+            this subclass is for adding wesay-specific policies, i.e. auto-populating definitions from glosses
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.WeSayLiftDataMapper.PostProcessSenses(System.Object,System.EventArgs)">
+            <summary>
+            We do this because in linguist tools, there is a distinction that we don't want to 
+            normally make in WeSay.  There, "gloss" is the first pass at a definition, but its
+            really just for interlinearlization.  That isn't a distinction we want our user
+            to bother with.
+            </summary>
+        </member>
+        <member name="M:Palaso.DictionaryServices.Lift.WeSayLiftDataMapper.FixUpOldLiteralMeaningMistake(Palaso.DictionaryServices.Model.LexEntry,Palaso.DictionaryServices.Model.LexSense)">
+            <summary>
+            we initially, mistakenly put literal meaning on sense. This moves
+            it and switches to newer naming style.
+            </summary>
+        </member>
+        <member name="T:Palaso.DictionaryServices.Model.LexVariant">
+            <summary>
+            not implemented: ref
+            not implemented: pronunciation
+            not implemented: relation
+            
+            </summary>
+        </member>
+    </members>
+</doc>
