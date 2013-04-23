@@ -1,28 +1,37 @@
 ﻿<!DOCTYPE HTML>
 <html>
-    <body>
-        <p>
-            <label>Label this point in the project history (Optional):</label>
-            <br/>
-            <input type = "text" id = "labelText" style="width: 100%" />
-        </p>
-        <p>
-            <button id="UsbButton" disabled="">USB Flash Drive</button>
-            <br/>
-            <label>Checking...</label>
-        </p>
-        <p>
-            <button id="InternetButton">Internet</button>
-            <br/>
-            <label>Checking...</label>
-        </p>
-        <p>
-            <button id="ChorusHubButton">Chorus Hub</button>
-            <br/>
-            <label>Checking...</label>
-        </p>
-        <p>
-            <button id="toggleInsertUsbFlashDrive"> Insert Usb Flash Drive</button>
-        </p>
-    </body>
+	<head>
+		<style>
+			body {background-color: #99ccff}
+		</style>
+	</head>
+	<body>
+			<p id="history" class="section">
+				<label>Label this point in the project history (Optional):</label>
+				<br/>
+				<input type = "text" id = "labelText" style="width: 100%" />
+				<br/>
+			</p>
+			<p id="usb" class="section">
+				<button id="UsbButton" disabled="">USB Flash Drive</button>
+				<br/>
+				<label id="usb-label">Checking...</label>
+				<br/>
+			</p>
+			<p id="internet" class="section">
+				<button id="InternetButton">Internet</button>
+				<br/>
+				<label id="internet-label">Checking...</label>
+				<br/>
+			</p>
+			<p id="hub" class="section">
+				<button id="ChorusHubButton">Chorus Hub</button>
+				<br/>
+				<label id="hub-label">Checking...</label>
+				<br/>
+			</p>
+			<p>
+			<button id="toggleInsertUsbFlashDrive"> Insert Usb Flash Drive</button>
+			</p>
+	</body>
 </html>
