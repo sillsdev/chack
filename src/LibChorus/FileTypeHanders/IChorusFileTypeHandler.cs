@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Chorus.FileTypeHanders.test;
-using Chorus.Utilities.code;
 using Chorus.merge;
 using Chorus.VcsDrivers.Mercurial;
 using Palaso.IO;
@@ -109,11 +108,12 @@ namespace Chorus.FileTypeHanders
             var fileTypeHandlers = new ChorusFileTypeHandlerCollection();
 
         	var libChorusAssembly = Assembly.GetExecutingAssembly();
-
-			//Set the codebase variable appropriately depending on the OS
-	        var codeBase = libChorusAssembly.CodeBase.Substring(LinuxUtils.IsUnix ? 7 : 8);
-
-	        var dirname = Path.GetDirectoryName(codeBase);
+#if MONO
+        	var codeBase = libChorusAssembly.CodeBase.Substring(7);
+#else
+			var codeBase = libChorusAssembly.CodeBase.Substring(8);
+#endif
+        	var dirname = Path.GetDirectoryName(codeBase);
 			//var baseDir = new Uri(dirname).AbsolutePath; // NB: The Uri class in Windows and Mono are not the same.
             var baseDir = dirname;
 			var pluginAssemblies = new List<Assembly>

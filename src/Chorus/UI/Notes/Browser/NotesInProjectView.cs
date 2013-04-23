@@ -20,10 +20,7 @@ namespace Chorus.UI.Notes.Browser
             //       _model.ProgressDisplay = new NullProgress();
             InitializeComponent();
             _messageListView.SmallImageList = AnnotationClassFactoryUI.CreateImageListContainingAnnotationImages();
-            showResolvedNotesMenuItem.Checked = _model.ShowClosedNotes;
-	        showQuestionsMenuItem.Checked = !_model.HideQuestions;
-	        showMergeNotifcationsMenuItem.Checked = !model.HideNotifications;
-	        showMergeConflictsMenuItem.Checked = !model.HideCriticalConflicts;
+            showClosedNotesToolStripMenuItem1.Checked = _model.ShowClosedNotes;
             timer1.Interval = 1000;
             timer1.Tick += new EventHandler(timer1_Tick);
             timer1.Enabled = true;
@@ -54,7 +51,7 @@ namespace Chorus.UI.Notes.Browser
             
             foreach (var item in _model.GetMessages())
             {
-                rows.Add(item.GetListViewItem(_model.DisplaySettings));
+                rows.Add(item.GetListViewItem());
 			}
 			_messageListView.Items.Clear(); // Don't even think of moving this before the loop, as the items are doubled for reasons unknown.
             _messageListView.Items.AddRange(rows.ToArray());
@@ -67,7 +64,7 @@ namespace Chorus.UI.Notes.Browser
                 bool gotIt = false;
                 foreach (ListViewItem listViewItem in _messageListView.Items)
                 {
-                    if (((ListMessage)(listViewItem.Tag)).ParentAnnotation.Guid == previousItem.ParentAnnotation.Guid)
+                    if (((ListMessage)(listViewItem.Tag)).Message.Guid == previousItem.Message.Guid)
                     {
                         listViewItem.Selected = true;
                         gotIt = true;
@@ -86,7 +83,6 @@ namespace Chorus.UI.Notes.Browser
                         _messageListView.Items[_messageListView.Items.Count - 1].Selected = true; // closest to original index
                 }
             }
-	        filterStateLabel.Text = _model.FilterStateMessage;
             //enhance...we could, if the message is not found, go looking for the owning annotation. But since
             //you can't currently delete a message, that wouldn't have any advantage yet.
 
@@ -133,24 +129,9 @@ namespace Chorus.UI.Notes.Browser
             
         }
 
-        private void showClosedNotesMenuItem_Click(object sender, EventArgs e)
+        private void showClosedNotesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             _model.ShowClosedNotes = ((ToolStripMenuItem)sender).Checked;
         }
-
-		private void showQuestionsMenuItem_Click(object sender, EventArgs e)
-		{
-			_model.HideQuestions = !((ToolStripMenuItem)sender).Checked;
-		}
-
-		private void showMergeNotificationsMenuItem_Click(object sender, EventArgs e)
-		{
-			_model.HideNotifications = !((ToolStripMenuItem)sender).Checked;
-		}
-
-		private void showMergeConflictsMenuItem_Click(object sender, EventArgs e)
-		{
-			_model.HideCriticalConflicts = !((ToolStripMenuItem)sender).Checked;
-		}
     }
 }

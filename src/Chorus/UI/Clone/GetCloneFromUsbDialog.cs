@@ -25,6 +25,7 @@ namespace Chorus.UI.Clone
             Font = SystemFonts.MessageBoxFont;
 
             InitializeComponent();
+            _helpProvider.RegisterPrimaryHelpFileMapping("chorus.helpmap");
             _model = new CloneFromUsb();
             UpdateDisplay(State.LookingForUsb);
             _progress = _logBox;
@@ -88,7 +89,7 @@ namespace Chorus.UI.Clone
                     throw new ArgumentOutOfRangeException();
             }
 
-            _copyToComputerButton.Enabled = IsEnabledItemSelected();
+            _copyToComputerButton.Enabled = listView1.SelectedItems.Count == 1;
         }
 
         private void GetCloneFromUsbDialog_Load(object sender, EventArgs e)
@@ -114,7 +115,15 @@ namespace Chorus.UI.Clone
                 return;
             }
             foreach (string path in paths)
-                listView1.Items.Add(_model.CreateListItemFor(path));
+            {
+                var item = new ListViewItem(System.IO.Path.GetFileName(path));
+                item.Tag = path;
+                var last = File.GetLastWriteTime(path);
+                item.SubItems.Add(last.ToShortDateString() + " " + last.ToShortTimeString());
+                item.ToolTipText = path;
+                item.ImageIndex = 0;
+                listView1.Items.Add(item);
+            }
             UpdateDisplay(State.WaitingForUserSelection);
         }
 
@@ -151,23 +160,10 @@ namespace Chorus.UI.Clone
             DialogResult = DialogResult.Cancel;
         }
 
-		private bool IsEnabledItemSelected()
-		{
-			if (listView1.SelectedItems.Count != 1)
-				return false;
-			 var item = listView1.SelectedItems[0] as ListViewItem;
-			return item.ForeColor != CloneFromUsb.DisabledItemForeColor;
-		}
-
         private void OnMakeCloneClick(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(SelectedPath))
                 return;
-			if (!IsEnabledItemSelected())
-			{
-				//MessageBox.Show(item.ToolTipText, "Problem", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-				return;
-			}
 
             if (!Directory.Exists(_parentDirectoryToPutCloneIn))
             {

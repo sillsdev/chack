@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9DA5A655-1881-4BE1-81BA-256E47CF7537}</ProjectGuid>
@@ -48,7 +48,7 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <ApplicationIcon>chorus.ico</ApplicationIcon>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>..\..\output\$(Configuration)\Chorus.XML</DocumentationFile>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -67,7 +67,7 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <ApplicationIcon>chorus.ico</ApplicationIcon>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMono|AnyCPU' ">
@@ -77,7 +77,7 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <DocumentationFile>..\..\output\$(Configuration)\Chorus.XML</DocumentationFile>
     <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -94,27 +94,102 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\output\$(Configuration)</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DocumentationFile>..\..\output\Debug\Chorus.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\output\Debug\Chorus.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\output\$(Configuration)</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\output\Release\Chorus.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugMono|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\output\$(Configuration)</OutputPath>
+    <DefineConstants>DEBUG;TRACE;MONO</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DocumentationFile>..\..\output\DebugMono\Chorus.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\output\DebugMono\Chorus.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseMono|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\output\$(Configuration)</OutputPath>
+    <DefineConstants>TRACE;MONO</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\output\ReleaseMono\Chorus.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
+    <Reference Include="Autofac, Version=1.4.4.561, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\common\Autofac.dll</HintPath>
+      <HintPath>..\..\lib\$(Configuration)\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Palaso, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\$(Configuration)\Palaso.dll</HintPath>
     </Reference>
-    <Reference Include="PalasoUIWindowsForms, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\$(Configuration)\PalasoUIWindowsForms.dll</HintPath>
+    <Reference Include="geckofx-core-11">
+      <HintPath>..\..\lib\$(Configuration)\geckofx-11.dll</HintPath>
     </Reference>
+<!-- TODO: renable this latter 
+    <None Condition="'$(Configuration)' == 'DebugMono' Or '$(Configuration)' == 'ReleaseMono' " Include="\usr\lib\fieldworks\geckofix.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Condition="'$(Configuration)' == 'DebugMono' Or '$(Configuration)' == 'ReleaseMono' " Include="\usr\lib\fieldworks\geckofx-core-14.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+-->
     <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="Vulcan.Uczniowie.HelpProvider">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\common\Vulcan.Uczniowie.HelpProvider.dll</HintPath>
@@ -132,19 +207,6 @@
     <Compile Include="UI\BetterLabel.designer.cs">
       <DependentUpon>BetterLabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Clone\DuplicateProjectWarningDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Clone\DuplicateProjectWarningDialog.Designer.cs">
-      <DependentUpon>DuplicateProjectWarningDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Clone\GetSharedProjectDlg.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Clone\GetSharedProjectDlg.Designer.cs">
-      <DependentUpon>GetSharedProjectDlg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Notes\ChorusNotesDisplaySettings.cs" />
     <Compile Include="UI\Clone\CloneFromUsb.cs" />
     <Compile Include="UI\Clone\GetCloneFromChorusHubModel.cs" />
     <Compile Include="UI\Clone\GetCloneFromChorusHubDialog.cs">
@@ -153,8 +215,23 @@
     <Compile Include="UI\Clone\GetCloneFromChorusHubDialog.Designer.cs">
       <DependentUpon>GetCloneFromChorusHubDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Clone\GetSharedProjectModel.cs" />
+    <Compile Include="UI\Clone\GetCloneFromNetworkFolderModel.cs" />
+    <Compile Include="UI\Clone\GetCloneFromNetworkFolderDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Clone\GetCloneFromNetworkFolderDlg.Designer.cs">
+      <DependentUpon>GetCloneFromNetworkFolderDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Clone\GetSharedProject.cs" />
     <Compile Include="UI\Clone\ICloneSourceDialog.cs" />
+    <Compile Include="UI\Clone\IGetSharedProject.cs" />
+    <Compile Include="UI\Misc\NetworkFolderSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Misc\NetworkFolderSettingsControl.Designer.cs">
+      <DependentUpon>NetworkFolderSettingsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Misc\NetworkFolderSettingsModel.cs" />
     <Compile Include="UI\Misc\ServerSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -235,7 +312,6 @@
       <DependentUpon>SearchBox.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Notes\Html\StyleSheet.cs" />
-    <Compile Include="UI\Notes\MergeConflictEmbeddedMessageContentHandler.cs" />
     <Compile Include="UI\Review\ChangedReport\ChangeReportView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -284,15 +360,16 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="UI\Clone\DuplicateProjectWarningDialog.resx">
-      <DependentUpon>DuplicateProjectWarningDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Clone\GetCloneFromChorusHubDialog.resx">
       <DependentUpon>GetCloneFromChorusHubDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Clone\GetSharedProjectDlg.resx">
-      <DependentUpon>GetSharedProjectDlg.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Clone\GetCloneFromNetworkFolderDlg.resx">
+      <DependentUpon>GetCloneFromNetworkFolderDlg.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Misc\NetworkFolderSettingsControl.resx">
+      <DependentUpon>NetworkFolderSettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Review\ChangedReport\ChangeReportView.resx">
       <DependentUpon>ChangeReportView.cs</DependentUpon>
@@ -421,6 +498,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+ <Reference Include="ChorusHub, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\output\$(Configuration)\ChorusHub.dll</HintPath>
+    </Reference>
     <ProjectReference Include="..\ChorusHub\ChorusHub.csproj">
       <Project>{EB8C974D-B1C6-4CE0-BFD4-170EFE18790C}</Project>
       <Name>ChorusHub</Name>

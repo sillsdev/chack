@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Xml;
+﻿using System.Xml;
 using Chorus.FileTypeHanders.lift;
 using Chorus.merge;
 using Chorus.merge.xml.generic;
-using Palaso.Lift;
 
 namespace Chorus.FileTypeHanders
 {
@@ -52,17 +50,6 @@ namespace Chorus.FileTypeHanders
 		public MergeStrategies GetStrategies()
 		{
 			return _merger.MergeStrategies;
-		}
-
-		/// <summary>
-		/// lift-ranges can include multitext elements which potentially can include text elements with spans.
-		/// So we need to suppress pretty-printing text elements.
-		/// Theoretically, spans can contain nested spans, so suppress pretty-printing those also.
-		/// </summary>
-		/// <returns></returns>
-		public HashSet<string> SuppressIndentingChildren()
-		{
-			return LiftSorter.LiftSuppressIndentingChildren;
 		}
 	}
 }

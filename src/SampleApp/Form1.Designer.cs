@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace SampleApp
+﻿namespace SampleApp
 {
 	partial class Form1
 	{
@@ -40,7 +38,7 @@ namespace SampleApp
             this._viewTestDataDirectory = new System.Windows.Forms.LinkLabel();
             this._syncButton = new System.Windows.Forms.Button();
             this._helpProvider = new Vulcan.Uczniowie.HelpProvider.HelpComponent(this.components);
-            this.button1 = new Button();
+            this._helpProvider = new Vulcan.Uczniowie.HelpProvider.HelpComponent(this.components);
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 

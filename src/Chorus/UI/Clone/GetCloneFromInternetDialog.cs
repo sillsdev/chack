@@ -30,6 +30,7 @@ namespace Chorus.UI.Clone
             Font = SystemFonts.MessageBoxFont;
 //#endif
             InitializeComponent();
+            _helpProvider.RegisterPrimaryHelpFileMapping("chorus.helpmap");
 
             Font = SystemFonts.MessageBoxFont;
 
@@ -85,7 +86,7 @@ namespace Chorus.UI.Clone
         private void _backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (_statusProgress.ErrorEncountered)
-            {
+            {            
                 UpdateDisplay(State.Error);
                 _model.CleanUpAfterErrorOrCancel();
                 _statusProgress.Reset();
@@ -172,7 +173,7 @@ namespace Chorus.UI.Clone
                     _fixSettingsButton.Visible = true;
                     _fixSettingsButton.Focus();
                     _cancelButton.Visible = true;
-                    _cancelButton.Text = "&Cancel";
+                    //_cancelButton.Text = "&Cancel";
                     //_cancelButton.Select();
                     _cancelTaskButton.Visible = false;
                     _statusLabel.Visible = true;
@@ -298,7 +299,6 @@ namespace Chorus.UI.Clone
         private void GetCloneFromInternetDialog_BackColorChanged(object sender, EventArgs e)
         {
             _logBox.BackColor  =this.BackColor;
-        }
-
+        }    
     }
 }

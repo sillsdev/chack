@@ -1429,5 +1429,5 @@ namespace LibChorus.Tests.merge.xml.lift
 				XmlTestHelper.AssertXPathMatchesExactlyOne(result, "//note/form[@lang='en']");
 			}
 		}
-    }
+	}
 }

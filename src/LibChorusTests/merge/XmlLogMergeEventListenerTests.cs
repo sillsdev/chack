@@ -167,7 +167,5 @@ namespace LibChorus.Tests.merge
         {
             writer.WriteElementString("annotation", string.Empty, "Dummy");
         }
-
-		public bool IsNotification { get { return false; } }
     }
 }

@@ -39,46 +39,47 @@ namespace Chorus.Utilities
 			return url;
 		}
 
-        /// <summary>
-        /// Get at the value in a URL, which is listed in the collection of name=value pairs after the ?
-        /// If the name key is not found, it returns 'defaultIfCannotGetIt'.
-        /// N.B. If the same name is listed twice, this method returns the first value.
-        /// </summary>
-        /// <example>GetValueFromQueryStringOfRef("lift://blah.lift?id=foo", "id", "") returns "foo"</example>
-        public static string GetValueFromQueryStringOfRef(string url, string name, string defaultIfCannotGetIt)
-        {
-            if (String.IsNullOrEmpty(url))
+		/// <summary>
+		/// get at the value in a URL, which are listed the collection of name=value pairs after the ?
+		/// </summary>
+		/// <example>GetValueFromQueryStringOfRef("id", ""lift://blah.lift?id=foo") returns "foo"</example>
+		public static string GetValueFromQueryStringOfRef(string url, string name, string defaultIfCannotGetIt)
+		{
+            if(String.IsNullOrEmpty(url))
                 return defaultIfCannotGetIt;
 
             if (url == "unknown") //some previous step couldn't come up with the url... review: why not just string.empty then? see CHR-2
-                return defaultIfCannotGetIt;
-
+                return defaultIfCannotGetIt; 
+            
             string originalUrl = url;
-            try
-            {
-                Uri uri;
-                url = StripSpaceOutOfHostName(url);
+			try
+			{
+				Uri uri;
+			    url = StripSpaceOutOfHostName(url);
                 if (!Uri.TryCreate(url, UriKind.Absolute, out uri) || uri == null)
                 {
                     throw new ApplicationException("Could not parse the url " + url);
                 }
-                //Could not parse the url lift://FTeam.lift?type=entry&label=نویس&id=e824f0ae-6d36-4c52-b30b-eb845d6c120a
+                else
+                {
+                    //Could not parse the url lift://FTeam.lift?type=entry&label=نویس&id=e824f0ae-6d36-4c52-b30b-eb845d6c120a
 
-                var parse = Palaso.Network.HttpUtilityFromMono.ParseQueryString(uri.Query);
+                    var parse = Palaso.Network.HttpUtilityFromMono.ParseQueryString(uri.Query);
 
-                var r = parse.GetValues(name);
-                var label = r == null ? defaultIfCannotGetIt : r.First();
-                return string.IsNullOrEmpty(label) ? defaultIfCannotGetIt : label;
-            }
-            catch (Exception e)
-            {
+                    var r = parse.GetValues(name);
+                    var label = r == null ? defaultIfCannotGetIt : r.First();
+                    return string.IsNullOrEmpty(label) ? defaultIfCannotGetIt : label;
+                }
+			}
+			catch (Exception e)
+			{
 #if DEBUG
                 var message = String.Format("Debug mode only: GetValueFromQueryStringOfRef({0},{1}) {2}", originalUrl, name, e.Message);
-                ErrorReport.NotifyUserOfProblem(new Palaso.Reporting.ShowOncePerSessionBasedOnExactMessagePolicy(), message);
+			    ErrorReport.NotifyUserOfProblem(new Palaso.Reporting.ShowOncePerSessionBasedOnExactMessagePolicy(), message);
 #endif
-                return defaultIfCannotGetIt;
-            }
-        }
+				return defaultIfCannotGetIt;
+			}
+		}
 
         /// <summary>
         /// this is needed because Url.TryCreate dies if there is a space in the initial part, but

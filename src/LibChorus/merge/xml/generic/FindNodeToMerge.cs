@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 #endif
 using System.Text;
+using System.Web;
 using System.Xml;
 using Chorus.merge.xml.generic.xmldiff;
 using Palaso.Code;
@@ -248,7 +249,7 @@ namespace Chorus.merge.xml.generic
 			if (nodeToMatch.Name != _elementName)
 			{
 				_parentNode = _sourceNode = null; // force regenerate both maps
-				_elementName = nodeToMatch.Name;
+				_elementName = nodeToMatch.Name;	
 			}
 
             if (_sourceNode != nodeToMatch.ParentNode)

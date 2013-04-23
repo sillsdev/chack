@@ -17,7 +17,7 @@ namespace Chorus.merge
         /// To keep the behavior the same, RecordContextInConflict does nothing.
         /// </summary>
         /// <param name="conflict"></param>
-        public virtual void RecordContextInConflict(IConflict conflict)
+        public void RecordContextInConflict(IConflict conflict)
         {
         }
 
@@ -38,7 +38,7 @@ namespace Chorus.merge
             Changes.Add(change);
         }
 
-        public virtual void EnteringContext(ContextDescriptor context)
+        public void EnteringContext(ContextDescriptor context)
         {
             Contexts.Add(context);
         }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Chorus.sync;
 using LibChorus.TestUtilities;
 using LibChorus.Tests.sync;
@@ -97,13 +96,6 @@ namespace LibChorus.Tests.VcsDrivers.Mercurial
 				Assert.IsTrue(result, "The only branch should be default.");
 				var revision = repoWithFiles.Repository.GetRevision(revNum);
 				Assert.AreEqual(newBranchName, revision.Branch, "Wrong branch name in new branch.");
-				var revisions = repoWithFiles.Repository.GetAllRevisions();
-				var branches = new HashSet<string>();
-				foreach (var rev in revisions)
-				{
-					branches.Add(rev.Branch);
-				}
-				Assert.AreEqual(branches.Count, 2, "Branches not properly reported in revisions.");
 			}
 		}
 

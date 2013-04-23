@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml;
 using Chorus.merge.xml.generic;
 
@@ -36,11 +35,6 @@ namespace Chorus.FileTypeHanders.ldml
 		public MergeStrategies GetStrategies()
 		{
 			throw new NotImplementedException();
-		}
-
-		public HashSet<string> SuppressIndentingChildren()
-		{
-			return new HashSet<string>();
 		}
 
 		#endregion

@@ -144,7 +144,8 @@ namespace Chorus.sync
 
 				//If we did pull any data or a trivial merge succeeded we should call UpdateToTheDescendantRevision
 				if (results.DidGetChangesFromOthers || //we pulled something
-                    (workingRevBeforeSync!=null //will be null if this is the 1st checkin ever, but no files were added so there was no actual rev created
+                    (
+                    workingRevBeforeSync!=null //will be null if this is the 1st checkin ever, but no files were added so there was no actual rev created
 					&& !repo.GetRevisionWorkingSetIsBasedOn().Number.Hash.Equals(workingRevBeforeSync.Number.Hash))) //a merge happened
 				{
 					UpdateToTheDescendantRevision(repo, workingRevBeforeSync);
@@ -583,8 +584,7 @@ namespace Chorus.sync
             try
             {
                 var heads = repository.GetHeads();
-				//if there is only one head for the branch we started from just update
-                if (heads.Count(rev => rev.Branch == parent.Branch) == 1)
+                if (heads.Count == 1)
                 {
                     repository.Update(); //update to the tip
 					_sychronizerAdjunct.SimpleUpdate(_progress, false);
@@ -595,10 +595,11 @@ namespace Chorus.sync
                     return;//nothing has been checked in, so we're done! (this happens during some UI tests)
                 }
 
-                //  when there are more than 2 people merging and there's a failure or a no-op merge happened
+                //TODO: I think this "direct descendant" limitation won't be enough 
+                //  when there are more than 2 people merging and there's a failure
                 foreach (var head in heads)
                 {
-                    if (parent.Number.Hash == head.Number.Hash || (head.Branch == parent.Branch && head.IsDirectDescendantOf(parent)))
+                    if (parent.Number.Hash == head.Number.Hash || head.IsDirectDescendantOf(parent))
                     {
                         repository.RollbackWorkingDirectoryToRevision(head.Number.LocalRevisionNumber);
 						_sychronizerAdjunct.SimpleUpdate(_progress, true);
@@ -606,7 +607,7 @@ namespace Chorus.sync
                     }
                 }
 
-                _progress.WriteWarning("Staying at previous-tip (unusual). Other users recent changes will not be visible.");
+                _progress.WriteWarning("Staying at previous-tip (unusual)");
             }
 			catch (UserCancelledException)
 			{

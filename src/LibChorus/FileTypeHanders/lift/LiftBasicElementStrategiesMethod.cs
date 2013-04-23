@@ -29,11 +29,7 @@ namespace Chorus.FileTypeHanders.lift
 			// Mixes text data and <span> elements
 			// 'lang' attr from parent <form> element is the defacto same thing for the <text> element, but has no attrs itself.
 			// <text>
-			var textStrategy = AddSingletonElementType(mergeStrategies, "text");
-			textStrategy.IsAtomic = true; // don't attempt merge within text elements if they have non-text-node children, e.g., <span>
-			// but we can do text-level merging if there are no spans; this allows text editing conflicts to be reported
-			// and multiple text nodes which amount to the same inner text to be ignored.
-			textStrategy.AllowAtomicTextMerge = true; 
+			AddSingletonElementType(mergeStrategies, "text");
 			// </text>
 			// ******************************* </text> **************************************************
 

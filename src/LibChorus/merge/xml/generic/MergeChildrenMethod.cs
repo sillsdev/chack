@@ -51,15 +51,8 @@ namespace Chorus.merge.xml.generic
 			// Deal with deletions.
 			DoDeletions();
 
-			// Allow the most promising parent's strategy to determine whether order is significant for children.
-			// The default configuration of ElementStrategy uses an AskChildren strategy, which means individual
-			// children determine whether their order is significant.
-	        var parentNode = _ours ?? _theirs ?? _ancestor;
-	        var parentStrategy = _merger.MergeStrategies.GetElementStrategy(parentNode);
-	        var parentOrder = parentStrategy == null ? ChildOrder.AskChildren : parentStrategy.ChildOrderPolicy.OrderSignificance(parentNode);
-
 			ChildOrderer oursOrderer = new ChildOrderer(_childrenOfOurKeepers, _childrenOfTheirKeepers,
-				MakeCorrespondences(_childrenOfOurKeepers, _childrenOfTheirKeepers, _theirs), _merger, parentOrder);
+				MakeCorrespondences(_childrenOfOurKeepers, _childrenOfTheirKeepers, _theirs), _merger);
 
 			ChildOrderer resultOrderer = oursOrderer; // default
 
@@ -67,10 +60,10 @@ namespace Chorus.merge.xml.generic
 			{
 				// The order of the two lists is not consistent. Compare with ancestor to see who changed.
 				ChildOrderer ancestorOursOrderer = new ChildOrderer(_childrenOfAncestorKeepers, _childrenOfOurKeepers,
-					MakeCorrespondences(_childrenOfAncestorKeepers, _childrenOfOurKeepers, _ours), _merger, parentOrder);
+					MakeCorrespondences(_childrenOfAncestorKeepers, _childrenOfOurKeepers, _ours), _merger);
 
 				ChildOrderer ancestorTheirsOrderer = new ChildOrderer(_childrenOfAncestorKeepers, _childrenOfTheirKeepers,
-					MakeCorrespondences(_childrenOfAncestorKeepers, _childrenOfTheirKeepers, _theirs), _merger, parentOrder);
+					MakeCorrespondences(_childrenOfAncestorKeepers, _childrenOfTheirKeepers, _theirs), _merger);
 
 				if (ancestorTheirsOrderer.OrderIsDifferent)
 				{
@@ -86,7 +79,7 @@ namespace Chorus.merge.xml.generic
 					{
 						// only they re-ordered; take their order as primary.
 						resultOrderer = new ChildOrderer(_childrenOfTheirKeepers, _childrenOfOurKeepers,
-							MakeCorrespondences(_childrenOfTheirKeepers, _childrenOfOurKeepers, _ours), _merger, parentOrder);
+							MakeCorrespondences(_childrenOfTheirKeepers, _childrenOfOurKeepers, _ours), _merger);
 					}
 				}
 				else if(!ancestorOursOrderer.OrderIsDifferent)
@@ -300,8 +293,7 @@ namespace Chorus.merge.xml.generic
                                                                        theirChild, ancestorChild,
                                                                        _merger.MergeSituation,
                                                                        _merger.MergeStrategies.GetElementStrategy(theirChild),
-                                                                       _merger.MergeSituation.BetaUserId),
-									theirChild);
+                                                                       _merger.MergeSituation.BetaUserId));
 								_skipInnerMergeFor.Add(theirChild);
 							}
                             else
@@ -345,8 +337,7 @@ namespace Chorus.merge.xml.generic
 							// Route tested (XmlMergerTests).
                             _merger.ConflictOccurred(
 								new EditedVsRemovedElementConflict(ourChild.Name, ourChild, null, ancestorChild,
-																   _merger.MergeSituation, _merger.MergeStrategies.GetElementStrategy(ourChild), _merger.MergeSituation.AlphaUserId),
-								ourChild);
+																   _merger.MergeSituation, _merger.MergeStrategies.GetElementStrategy(ourChild), _merger.MergeSituation.AlphaUserId));
 							_skipInnerMergeFor.Add(ourChild);
                         }
                         else
@@ -497,10 +488,9 @@ namespace Chorus.merge.xml.generic
 		private bool _orderIsConsistent;
 		private bool _orderIsDifferent;
 		private bool _orderIsAmbiguous;
-		private ChildOrder _parentOrder;
 
 		internal ChildOrderer(List<XmlNode> primary, List<XmlNode> others, Dictionary<XmlNode, XmlNode> correspondences,
-			XmlMerger merger, ChildOrder parentOrder)
+			XmlMerger merger)
 		{
 			_primary = primary;
 			_others = others;
@@ -508,7 +498,6 @@ namespace Chorus.merge.xml.generic
 			_positions = new PositionRecord[others.Count];
 			Debug.Assert(merger != null);
 			_merger = merger;
-			_parentOrder = parentOrder;
 		}
 
 		internal Dictionary<XmlNode, XmlNode> Correspondences
@@ -725,16 +714,8 @@ namespace Chorus.merge.xml.generic
             foreach (PositionRecord pr in _positions)
             {
                 //REVIEW JT (johnH): Can you decide if this is sufficient or if there is a better approach?
-	            bool bypassAmbiguityStuff;
-	            if (_parentOrder == ChildOrder.AskChildren)
-	            {
                 var strategy = _merger.MergeStrategies.GetElementStrategy(pr._other);
-		            bypassAmbiguityStuff = (strategy != null && !strategy.OrderIsRelevant);
-	            }
-	            else
-	            {
-		            bypassAmbiguityStuff = _parentOrder == ChildOrder.NotSignificant;
-	            }
+                var bypassAmbiguityStuff = (strategy != null && !strategy.OrderIsRelevant);
                 
                 if (!bypassAmbiguityStuff && pr.OrderIsAmbiguous(_primary.Count))
                     return true;

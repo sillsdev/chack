@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using Chorus.notes;
 using Chorus.Utilities;
@@ -35,14 +34,6 @@ namespace Chorus.UI.Notes.Browser
             splitContainer1.Panel2.Controls.Add(annotationView);
             ResumeLayout();
         }
-
-	    public EmbeddedMessageContentHandlerRepository MessageContentHandlerRepository
-	    {
-		    get {
-				var annotationView = splitContainer1.Panel2.Controls.OfType<AnnotationEditorView>().First();
-			    return annotationView.MesageContentHandlerRepository;
-		    }
-	    }
 
     }
 }

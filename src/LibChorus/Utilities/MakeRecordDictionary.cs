@@ -69,6 +69,10 @@ namespace Chorus.Utilities
 					{
 						AddKeyToIndex(record);
 					}
+					catch (ArgumentException exception)
+					{
+						Palaso.Reporting.ErrorReport.NotifyUserOfProblem(exception, exception.Message + " Please seek expert help in removing the duplicate GUID. The process will now continue.");
+					}
 					catch (Exception error)
 					{
 						if (ShouldContinueAfterDuplicateKey != null)
@@ -82,8 +86,7 @@ namespace Chorus.Utilities
 						{
 							throw;
 						}
-					}
-
+					}					
 				}
 			}
 		}
@@ -97,7 +100,7 @@ namespace Chorus.Utilities
 			var guid = GetAttribute(_identifierWithDoubleQuote, _closeDoubleQuote, data)
 				   ?? GetAttribute(_identifierWithSingleQuote, _closeSingleQuote, data);
 			try
-			{
+			{				
 				_dictionary.Add(guid, data);
 			}
 			catch (ArgumentException error)

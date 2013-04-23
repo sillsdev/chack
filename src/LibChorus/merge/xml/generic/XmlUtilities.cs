@@ -1,15 +1,17 @@
 using System;
+using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Xsl;
 using Chorus.FileTypeHanders.lift;
 using Chorus.merge.xml.generic.xmldiff;
-using Palaso.Extensions;
 
 
 namespace Chorus.merge.xml.generic
@@ -36,44 +38,26 @@ namespace Chorus.merge.xml.generic
     {
         public static bool AreXmlElementsEqual(string ours, string theirs)
         {
-	        return (ours == theirs) || AreXmlElementsEqual(CreateNode(ours), CreateNode(theirs));
+			if (ours == theirs)
+				return true;
+
+            StringReader osr = new StringReader(ours);
+            XmlReader or = XmlReader.Create(osr);
+            XmlDocument od = new XmlDocument();
+            XmlNode on = od.ReadNode(or);
+            @on.Normalize();
+
+            StringReader tsr = new StringReader(theirs);
+            XmlReader tr = XmlReader.Create(tsr);
+            XmlDocument td = new XmlDocument();
+            XmlNode tn = td.ReadNode(tr);
+            tn.Normalize();//doesn't do much
+
+            return AreXmlElementsEqual(@on, tn);
         }
 
-	    private static XmlNode CreateNode(string data)
-	    {
-			using (var stringReader = new StringReader(data))
-			using (var xmlReader = XmlReader.Create(stringReader))
-			{
-				var xmlDocument = new XmlDocument();
-				var xmlNode = xmlDocument.ReadNode(xmlReader);
-				xmlNode.Normalize();
-				return xmlNode;
-			}
-	    }
-
-		private static XmlNode CreateNode(byte[] data)
-		{
-			using (var memoryStream = new MemoryStream(data))
-			{
-				var xmlDocument = new XmlDocument();
-				xmlDocument.Load(memoryStream); // This loads the MemoryStream as Utf8 xml. (I checked.)
-				XmlNode xmlNode = xmlDocument.DocumentElement;
-				xmlNode.Normalize();
-				return xmlNode;
-			}
-		}
-
-	    public static bool AreXmlElementsEqual(byte[] ours, byte[] theirs)
-	    {
-		    // Painfully slow.
-			//IStructuralEquatable equate = ours;
-			//if (equate.Equals(theirs, EqualityComparer<byte>.Default))
-			//    return true;
-		    return ours.AreByteArraysEqual(theirs) || AreXmlElementsEqual(CreateNode(ours), CreateNode(theirs));
-	    }
-
-	    /// <summary>
-        /// This version of AreXmlElementsEqual is used to compare two xml strings
+        /// <summary>
+        /// this version of AreXmlElementsEqual is used to compare two xml strings
         /// and have it ignore certain specified attributes (if the corresponding string 
         /// in astrAttributeToIgnore is non-null) or elements (if the corresponding string
         /// in astrAttributeToIgnore is null)
@@ -86,20 +70,26 @@ namespace Chorus.merge.xml.generic
         public static bool AreXmlElementsEqual(string ours, string theirs, 
             string[] astrElementXPath, string[] astrAttributeToIgnore)
         {
-	        if (ours == theirs)
-		        return true;
+            StringReader osr = new StringReader(ours);
+            XmlReader or = XmlReader.Create(osr);
+            XmlDocument od = new XmlDocument();
+            XmlNode on = od.ReadNode(or);
+            @on.Normalize();
 
-		    var ourNode = CreateNode(ours);
-			var theirNode = CreateNode(theirs);
+            StringReader tsr = new StringReader(theirs);
+            XmlReader tr = XmlReader.Create(tsr);
+            XmlDocument td = new XmlDocument();
+            XmlNode tn = td.ReadNode(tr);
+            tn.Normalize();//doesn't do much
 
             Debug.Assert(astrElementXPath.Length == astrAttributeToIgnore.Length);
             for (int i = 0; i < astrElementXPath.Length; i++)
             {
-				RemoveItem(ourNode, astrElementXPath[i], astrAttributeToIgnore[i]);
-				RemoveItem(theirNode, astrElementXPath[i], astrAttributeToIgnore[i]);
+                RemoveItem(@on, astrElementXPath[i], astrAttributeToIgnore[i]);
+                RemoveItem(tn, astrElementXPath[i], astrAttributeToIgnore[i]);
             }
 
-			return AreXmlElementsEqual(ourNode, theirNode);
+            return AreXmlElementsEqual(@on, tn);
         }
 
         private static void RemoveItem(XmlNode node, string strXPath, string strAttribute)
@@ -124,28 +114,20 @@ namespace Chorus.merge.xml.generic
         {
             if (ours.NodeType == XmlNodeType.Text)
             {
-				if (theirs.NodeType != XmlNodeType.Text)
-	            {
-		            return false;
-	            }
-				var oursInnerTrimmed = ours.InnerText.Trim();
-				var theirsInnerTrimmed = theirs.InnerText.Trim();
-				var oursIsEmpty = string.IsNullOrEmpty(oursInnerTrimmed);
-				var theirsIsEmpty = string.IsNullOrEmpty(theirsInnerTrimmed);
-	            if (oursIsEmpty != theirsIsEmpty)
-	            {
-		            return false;
-	            }
-				return oursInnerTrimmed == theirsInnerTrimmed;
+                if (ours.NodeType != XmlNodeType.Text)
+                {
+                    return false;
+                }
+                bool oursIsEmpty = (ours.InnerText == null || ours.InnerText.Trim() == String.Empty);
+                bool theirsIsEmpty = (theirs.InnerText == null || theirs.InnerText.Trim() == String.Empty);
+                if(oursIsEmpty != theirsIsEmpty)
+                {
+                    return false;
+                }
+                return ours.InnerText.Trim() == theirs.InnerText.Trim();
             }
-	        if (theirs.NodeType == XmlNodeType.Text)
-		        return false; // Theirs is text, but ours is not.
 
-	        var ourOuterXml = ours.OuterXml;
-	        var theirOuterXml = theirs.OuterXml;
-	        if (ourOuterXml == theirOuterXml)
-		        return true;
-			return AreXmlElementsEqual(new XmlInput(ourOuterXml), new XmlInput(theirOuterXml));
+			return AreXmlElementsEqual(new XmlInput(ours.OuterXml), new XmlInput(theirs.OuterXml));
         }
 
 

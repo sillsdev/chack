@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -24,7 +23,7 @@ namespace LibChorus.Tests.FileHandlers
 	{
 		public static void TestThatALargeFileIsNotInRepository(string extension)
 		{
-			var pathToTestRoot = Path.Combine(Path.GetTempPath(), "LargeFileFilterTestFolder_" + extension + "_" + Guid.NewGuid());
+			var pathToTestRoot = Path.Combine(Path.GetTempPath(), "LargeFileFilterTestFolder");
 			try
 			{
 				if (Directory.Exists(pathToTestRoot))

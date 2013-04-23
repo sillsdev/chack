@@ -32,7 +32,7 @@ namespace Chorus.VcsDrivers.Mercurial
         private const int TimeoutInSeconds = 15;
         private const int TargetTimeInSeconds = TimeoutInSeconds / 3;
     	internal const string RevisionCacheFilename = "revisioncache.db";
-		
+
     	///<summary>
         ///</summary>
         public HgResumeTransport(HgRepository repo, string targetLabel, IApiServer apiServer, IProgress progress)
@@ -174,12 +174,13 @@ namespace Chorus.VcsDrivers.Mercurial
 			}
 
 			//The goal here is to to return the first common revision of each branch.
-            var commonBases = new List<Revision>();
+            var commonBase = new List<Revision>();
 			var localBranches = new List<string>(localRevisions.Keys);
-			while (commonBases.Count < localRevisions.Keys.Count())
+
+			while (commonBase.Count < localRevisions.Keys.Count())
 			{
 				var remoteRevisions = GetRemoteRevisions(offset, quantity);
-				if (remoteRevisions.Keys.Count() == 1 && remoteRevisions[remoteRevisions.Keys.First()].First().Split(':')[0] == "0")
+				if (remoteRevisions.Keys.Count() == 1 && remoteRevisions[remoteRevisions.Keys.First()].First() == "0")
 				{
 					// special case when remote repo is empty (initialized with no changesets)
 					return new List<Revision>();
@@ -194,27 +195,19 @@ namespace Chorus.VcsDrivers.Mercurial
 						var commonRevision = localList.Find(localRev => localRev.Number.Hash == remoteRevision);
 						if (commonRevision != null)
 						{
-							commonBases.Add(commonRevision);
+							commonBase.Add(commonRevision);
 							break;
 						}
 					}
 				}
 				if(remoteRevisions.Count() < quantity)
-                {
-                    //we did not find a common revision for each branch, but we ran out of revisions from the repo
-				    break;
+				{
+					break; //we did not find a common revision for each branch, but we ran out of revisions from the repo
 				}
 				offset += quantity;
 			}
-
-            // If we have found no common revisions at this point, the remote repo is unrelated
-            if (commonBases.Count == 0)
-            {
-                return null;
-            }
-
-			LastKnownCommonBases = commonBases;
-            return commonBases;
+			LastKnownCommonBases = commonBase;
+            return commonBase;
         }
 
 
@@ -597,9 +590,9 @@ namespace Chorus.VcsDrivers.Mercurial
         public bool Pull()
         {
             var baseHashes = GetCommonBaseHashesWithRemoteRepo();
-            if (baseHashes == null || baseHashes.Count == 0)
+            if (baseHashes.Count == 0)
             {
-                // a null or empty list indicates that the server has an empty repo
+                // an empty list indicates that the server has an empty repo
                 // in this case there is no reason to Pull
                 return false;
             }
@@ -651,10 +644,6 @@ namespace Chorus.VcsDrivers.Mercurial
                 }
                 retryLoop = false;
                 var response = PullOneChunk(req);
-				if (response.Status == PullStatus.Unauthorized)
-				{
-					throw new UnauthorizedAccessException();
-				}
                 if (response.Status == PullStatus.NotAvailable)
                 {
                     _progress.ProgressIndicator.Initialize();
@@ -801,14 +790,14 @@ namespace Chorus.VcsDrivers.Mercurial
             return PullStatus.Fail;
         }
 
-		private PullResponse PullOneChunk(HgResumeApiParameters request)
+        private PullResponse PullOneChunk(HgResumeApiParameters request)
         {
             var pullResponse = new PullResponse(PullStatus.Fail);
             try
             {
 
                 HgResumeApiResponse response = _apiServer.Execute("pullBundleChunk", request, TimeoutInSeconds);
-				if (response == null)
+                if (response == null)
                 {
                     _progress.WriteVerbose("API REQ: {0} Timeout", _apiServer.Url);
                     pullResponse.Status = PullStatus.Timeout;
@@ -879,11 +868,6 @@ namespace Chorus.VcsDrivers.Mercurial
                     }
                     return pullResponse;
                 }
-				if (response.HttpStatus == HttpStatusCode.Unauthorized)
-				{
-					_progress.WriteWarning("There is an authorization problem accessing this project. Check the project ID as well as your username and password. Alternatively, you may not be authorized to access this project.");
-					pullResponse.Status =  PullStatus.Unauthorized;
-				}
                 _progress.WriteWarning("Invalid Server Response '{0}'", response.HttpStatus);
                 return pullResponse;
             }

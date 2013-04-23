@@ -76,20 +76,34 @@ namespace LibChorus.Tests.VcsDrivers.Mercurial
 			if (ApiServer is IDisposable)
 				(ApiServer as IDisposable).Dispose();
         }
+
+		public void SetLocalAdjunct(ISychronizerAdjunct adjunct)
+		{
+			if (Local.Synchronizer == null)
+				Local.Synchronizer = Local.CreateSynchronizer();
+			Local.Synchronizer.SynchronizerAdjunct = adjunct;
+		}
+
+		public void SetRemoteAdjunct(ISychronizerAdjunct adjunct)
+		{
+			if (Remote.Synchronizer == null)
+				Remote.Synchronizer = Remote.CreateSynchronizer();
+			Remote.Synchronizer.SynchronizerAdjunct = adjunct;
+		}
 		
-		public virtual void LocalAddAndCommit()
+		public void LocalAddAndCommit()
         {
             string filename = Path.GetRandomFileName();
             Local.AddAndCheckinFile(filename, "localcheckin");
         }
 
-        public virtual void RemoteAddAndCommit()
+        public void RemoteAddAndCommit()
         {
             string filename = Path.GetRandomFileName();
             Remote.AddAndCheckinFile(filename, "remotecheckin");
         }
 
-        public virtual void LocalAddAndCommitLargeFile()
+        public void LocalAddAndCommitLargeFile()
         {
             LocalAddAndCommitLargeFile(1);
         }
@@ -104,12 +118,12 @@ namespace LibChorus.Tests.VcsDrivers.Mercurial
             Local.Repository.AddAndCheckinFile(filePath);
         }
 
-        public virtual void RemoteAddAndCommitLargeFile()
+        public void RemoteAddAndCommitLargeFile()
         {
             RemoteAddAndCommitLargeFile(1);
         }
 
-        public virtual void RemoteAddAndCommitLargeFile(int sizeInMb)
+        public void RemoteAddAndCommitLargeFile(int sizeInMb)
         {
             var filePath = Remote.ProjectFolder.GetPathForNewTempFile(false);
             byte[] data = new byte[sizeInMb * 1024 * 1024];  // 5MB file
@@ -119,7 +133,7 @@ namespace LibChorus.Tests.VcsDrivers.Mercurial
             Remote.Repository.AddAndCheckinFile(filePath);
         }
 
-        public virtual void SyncRemoteFromLocal()
+        public void SyncRemoteFromLocal()
         {
             var address = new HttpRepositoryPath("localrepo", Local.Repository.PathToRepo, false);
             Remote.Repository.Pull(address, Local.Repository.PathToRepo);
@@ -135,44 +149,7 @@ namespace LibChorus.Tests.VcsDrivers.Mercurial
         }
     }
 
-    internal class BranchingTestEnvironment : TestEnvironment
-    {
 
-
-        public BranchingTestEnvironment(string testName, ApiServerType type) : base(testName, type)
-        {
-            Local.Synchronizer = new Synchronizer(Local.Repository.PathToRepo, Local.ProjectFolderConfig, new NullProgress());
-            Remote.Synchronizer = new Synchronizer(Remote.Repository.PathToRepo, Remote.ProjectFolderConfig, new NullProgress());
-        }
-
-        public void SetLocalAdjunct(ISychronizerAdjunct adjunct)
-        {
-            if (Local.Synchronizer == null)
-                Local.Synchronizer = Local.CreateSynchronizer();
-            Local.Synchronizer.SynchronizerAdjunct = adjunct;
-        }
-
-        public void SetRemoteAdjunct(ISychronizerAdjunct adjunct)
-        {
-            if (Remote.Synchronizer == null)
-                Remote.Synchronizer = Remote.CreateSynchronizer();
-            Remote.Synchronizer.SynchronizerAdjunct = adjunct;
-        }
-
-        public override void LocalAddAndCommit()
-        {
-            var opts = new SyncOptions {CheckinDescription = "localaddandcommit"};
-            Local.Synchronizer.SyncNow(opts);
-            base.LocalAddAndCommit();
-        }
-
-        public override void RemoteAddAndCommit()
-        {
-            var opts = new SyncOptions { CheckinDescription = "remoteaddandcommit" };
-            Remote.Synchronizer.SyncNow(opts);
-            base.RemoteAddAndCommit();
-        }
-    }
 
 
     internal interface IApiServerForTest : IApiServer
@@ -376,14 +353,12 @@ namespace LibChorus.Tests.VcsDrivers.Mercurial
             ValidateParameters(method, request, bytesToWrite, secondsBeforeTimeout);
             if (method == "getRevisions")
             {
-                IEnumerable<Revision> revisions = _repo.GetAllRevisions();
-
+                IEnumerable<string> revisions = _repo.BranchingHelper.GetBranches().Select(rev => rev.Number.Hash + ':' + rev.Branch);
                 if (revisions.Count() == 0)
                 {
                     return ApiResponses.Revisions("0:default");
                 }
-                var revisionStrings = _repo.GetAllRevisions().Select(rev => rev.Number.Hash + ':' + rev.Branch);
-                return ApiResponses.Revisions(string.Join("|", revisionStrings.ToArray()));
+                return ApiResponses.Revisions(string.Join("|", revisions.ToArray()));
             }
             if (method == "finishPushBundle")
             {
