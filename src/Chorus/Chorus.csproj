@@ -600,7 +600,7 @@
     <CreateItem Include="..\..\lib\common\xulrunner\**\*.*">
       <Output TaskParameter="Include" ItemName="FilesToCopy" />
     </CreateItem>
-    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(OutDir)" />
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(OutDir)/xulrunner/" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
