@@ -5,7 +5,7 @@ namespace Chorus.merge
 {
     public class ChangeAndConflictAccumulator : IMergeEventListener
     {
-        
+
         public List<IConflict> Conflicts = new List<IConflict>();
         public List<IChangeReport> Changes = new List<IChangeReport>();
         public List<IConflict> Warnings = new List<IConflict>();
