@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<UsingTask TaskName="WebDownload" AssemblyFile="$(MSBuildThisFileDirectory)build/MSBuild.Community.Tasks.dll"/>
+	<UsingTask TaskName="Unzip" AssemblyFile="$(MSBuildThisFileDirectory)build/MSBuild.Community.Tasks.dll"/>
+	<UsingTask TaskName="CpuArchitecture" AssemblyFile="$(MSBuildThisFileDirectory)build/FwBuildTasks.dll"/>
+
+	<PropertyGroup>
+		<OutDir Condition="'$(OutDir)'==''">$(MSBuildThisFileDirectory)output/Debug</OutDir>
+	</PropertyGroup>
+
+	<Target Name="Build" DependsOnTargets="DownloadDependencies">
+		<MSBuild Projects="Chorus VS2010.sln" Properties="Configuration=Debug"/>
+	</Target>
+
+	<Target Name="DownloadDependencies" DependsOnTargets="DownloadDependencies-Linux;DownloadDependencies-Windows"/>
+
+	<Target Name="DownloadDependencies-Linux" Condition="'$(OS)'=='Unix'">
+		<CpuArchitecture>
+			<Output TaskParameter="Value" PropertyName="arch"/>
+		</CpuArchitecture>
+
+		<WebDownload Condition="!Exists('firefox.tar.bz2')" FileUri="ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/14.0.1/linux-$(arch)/en-US/firefox-14.0.1.tar.bz2"
+			FileName="firefox.tar.bz2"/>
+	</Target>
+
+	<Target Name="DownloadDependencies-Windows" Condition="'$(OS)'!='Unix'">
+		<!--
+		<WebDownload Condition="!Exists('xulrunner.zip')"
+			FileUri="ftp://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/14.0.1/runtimes/xulrunner-14.0.1.en-US.win32.zip"
+			FileName="xulrunner.zip"/>
+		<Unzip ZipFileName="xulrunner.zip" TargetDirectory="$(OutDir)/xulrunner"/>
+		-->
+	</Target>
+
+</Project>

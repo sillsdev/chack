@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<OutDir Condition="'$(OutDir)'==''">../../output/Debug</OutDir>
+	</PropertyGroup>
+
+	<Target Name="UnzipFirefox" Condition="!Exists('$(OutDir)/xulrunner')">
+		<Exec Command="tar -xvjf ../../firefox.tar.bz2"
+			WorkingDirectory="$(OutDir)"/>
+		<Exec Command="mv $(OutDir)/firefox $(OutDir)/xulrunner"/>
+	</Target>
+
+	<Target Name="CopyXulRunner" DependsOnTargets="CopyXulRunner-Linux;CopyXulRunner-Windows"/>
+
+	<Target Name="CopyXulRunner-Linux" Condition="'$(OS)'=='Unix'">
+		<Message Text="Please download the dependencies first! See Readme.md file."
+			Condition="!Exists('../../firefox.tar.bz2')"/>
+		<CallTarget Targets="UnzipFirefox"/>
+
+		<Copy SourceFiles="../../lib/$(Configuration)/Unix/geckofix.so"
+			DestinationFolder="$(OutDir)"/>
+		<Copy SourceFiles="../../lib/$(Configuration)/Unix/geckofx-core-14.dll.config"
+			DestinationFolder="$(OutDir)"/>
+	</Target>
+
+	<Target Name="CopyXulRunner-Windows" Condition="'$(OS)'!='Unix'">
+		<CreateItem Include="..\..\lib\common\xulrunner\**\*.*">
+			<Output TaskParameter="Include" ItemName="FilesToCopy" />
+		</CreateItem>
+		<Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(OutDir)/xulrunner" />
+	</Target>
+</Project>

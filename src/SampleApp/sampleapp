@@ -1,0 +1,12 @@
+#!/bin/bash
+
+CURRENT_DIR=$(dirname '$0')
+
+MONO_PREFIX=/usr/local
+export PATH="$MONO_PREFIX/bin:$PATH"
+export LD_LIBRARY_PATH=".:$MONO_PREFIX/lib:$CURRENT_DIR/xulrunner"
+export MONO_GAC_PREFIX="$MONO_PREFIX/lib/mono/gac"
+export LD_PRELOAD="./geckofix.so"
+
+mono --debug SampleApp.exe
+
