@@ -76,6 +76,10 @@ namespace SampleApp
             _dataEditor.Dock = DockStyle.Fill;
             _frontPage.Controls.Add(_dataEditor);
 
+			/*
+			 * Eberhard: I commented out the following lines because these components use the
+			 * Windows Forms WebBrowser. When we try to bring up the GeckoTestDlg this causes
+			 * a crash on Linux.
             _notesBrowserControl = _chorusSystem.WinForms.CreateNotesBrowser();
             _notesBrowserControl.Dock = DockStyle.Fill;
             _notesPage.Controls.Add(_notesBrowserControl);
@@ -83,6 +87,7 @@ namespace SampleApp
             _historyControl = _chorusSystem.WinForms.CreateHistoryPage();
             _historyControl.Dock = DockStyle.Fill;
             _historyPage.Controls.Add(_historyControl);
+            */
 	    }
 
 	    private void UnZipToDirectory(string dir)
