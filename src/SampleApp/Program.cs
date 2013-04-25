@@ -15,6 +15,9 @@ namespace SampleApp
 			Application.SetCompatibleTextRenderingDefault(false);
 			Xpcom.Initialize("xulrunner");
 
+			// Important: Call Xpcom.Shutdown() when done, otherwise the app won't exit on Linux!
+			Application.ApplicationExit += (object sender, EventArgs e) => { Xpcom.Shutdown(); };
+
             string dataDirectory = Path.Combine(Path.GetTempPath(), "ChorusSampleApp");
             if(Directory.Exists(dataDirectory ))
                 DeleteFolderThatMayBeInUse(dataDirectory);
