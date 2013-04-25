@@ -72,6 +72,7 @@ namespace SampleApp
 
 		private void OnTimerTick(object sender, EventArgs e)
 		{
+			_timer.Stop();
 			_timer.Tick -= OnTimerTick;
 			var hubLabel = browser.Document.GetElementById("hub-label");
 			hubLabel.TextContent = "Hello hub";

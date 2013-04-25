@@ -195,7 +195,8 @@ namespace SampleApp
 
 		private void geckofxbutton_Click(object sender, EventArgs e)
 		{
-			new GeckoTestDlg().ShowDialog();
+			using (var dlg = new GeckoTestDlg())
+				dlg.ShowDialog();
 		}
 	}
 }

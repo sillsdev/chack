@@ -74,13 +74,13 @@
     </TargetFrameworkProfile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="geckofx-core-14, Version=10.0.0.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
+    <Reference Include="geckofx-core-14">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Debug\geckofx-core-14.dll</HintPath>
+      <HintPath>..\..\lib\$(Configuration)\$(OS)\geckofx-core-14.dll</HintPath>
     </Reference>
-    <Reference Include="Geckofx-Winforms-14, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
+    <Reference Include="Geckofx-Winforms-14">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Debug\Geckofx-Winforms-14.dll</HintPath>
+      <HintPath>..\..\lib\$(Configuration)\$(OS)\Geckofx-Winforms-14.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip.Reduced">
       <HintPath>..\..\lib\common\Ionic.Zip.Reduced.dll</HintPath>
