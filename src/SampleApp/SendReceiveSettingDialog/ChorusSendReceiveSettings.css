@@ -1,0 +1,75 @@
+BODY
+{
+	background-color: #D7E4F2;
+	margin: 10px 20px;
+	font-family: verdana;
+	font-size: 9pt;
+}
+#tabs
+{
+	height: 397px;
+}
+#bottomButtonRow
+{
+	/*+placement:anchor-bottom-left 0px 0px;*/
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 16px;
+	margin-left: 28px;
+}
+TD
+{
+	width: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+#personIcon
+{
+	margin-right: 21px;
+	margin-top: 11px;
+}
+BUTTON IMG
+{
+	vertical-align: middle;
+}
+BUTTON
+{
+	font-family: Verdana;
+	width: 82px;
+	text-align: left;
+	height: 24px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	margin-top: 7px;
+}
+.serverChooser
+{
+	width: 268px;
+}
+#bottomRightButtonCluster
+{
+	margin-left: 45px;
+	display: inline-block;
+}
+INPUT
+{
+}
+#userName
+{
+	width: 205px;
+}
+TD.label
+{
+	text-align: right;
+	padding-right: 5px;
+}
+DIV.ch
+{
+	padding-top: 0.2in;
+}

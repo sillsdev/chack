@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Gecko;
@@ -9,9 +10,10 @@ namespace SampleApp
 	{
 	    private readonly HtmlButton _usbButton;
 		private readonly HtmlButton _hubButton;
-		private readonly HtmlButton _internetButton;
+        private readonly HtmlButton _internetButton;
+        private readonly HtmlButton _settingButton;
 	    private readonly HtmlButton _toggleInsertUsbFlashDrive;
-		private GeckoWebBrowser browser;
+		private GeckoWebBrowser _browser;
 		private bool _internetVisible = true;
 		private bool _internetLayedOut = true;
 		private string _internetLabelText = "";
@@ -20,15 +22,17 @@ namespace SampleApp
 		public GeckoTestDlg()
 		{
 			InitializeComponent();
-			browser = new GeckoWebBrowser {Dock = DockStyle.Fill};
-			browser.Navigate("file://" + Path.Combine(Environment.CurrentDirectory, "GeckoTestDlg.htm"));
-			Controls.Add(browser);
-			_usbButton = new HtmlButton(browser, "UsbButton");
-			_hubButton = new HtmlButton(browser, "ChorusHubButton");
-			_internetButton = new HtmlButton(browser, "InternetButton");
-            _toggleInsertUsbFlashDrive = new HtmlButton(browser, "toggleInsertUsbFlashDrive");
+			_browser = new GeckoWebBrowser {Dock = DockStyle.Fill};
+			_browser.Navigate("file://" + Path.Combine(Environment.CurrentDirectory, "GeckoTestDlg.htm"));
+			Controls.Add(_browser);
+			_usbButton = new HtmlButton(_browser, "UsbButton");
+			_hubButton = new HtmlButton(_browser, "ChorusHubButton");
+			_internetButton = new HtmlButton(_browser, "InternetButton");
+		    _settingButton = new HtmlButton(_browser, "settingsButton");
+            _toggleInsertUsbFlashDrive = new HtmlButton(_browser, "toggleInsertUsbFlashDrive");
             _usbButton.Clicked += OnUsbClicked;
 			_hubButton.Clicked += OnHubClicked;
+		    _settingButton.Clicked += OnSettingsClicked;
 			_internetButton.Clicked += OnInternetClicked;
 		    _toggleInsertUsbFlashDrive.Clicked += OnToggleInsertUsbFlashDriveButtonClicked;
 			_timer = new Timer();
@@ -37,7 +41,14 @@ namespace SampleApp
 			_timer.Start();
 		}
 
-		/// <summary>
+	    private void OnSettingsClicked(object sender, EventArgs e)
+        {
+            var chorusSendReceiveSettingsDialog = new ChorusSendReceiveSettingsDialog();
+            chorusSendReceiveSettingsDialog.Size = new Size(550, 600);
+            chorusSendReceiveSettingsDialog.Show();
+	    }
+
+	    /// <summary>
 		/// I wrote this to show the diference between setting the display and the visibility settings.
 		/// Also it should be noted that this will override any style settings that are put up at the document level but only for
 		/// the styles used here. (I noticed some oddities for the way elements internal to the paragraph dealt with the style
@@ -46,11 +57,11 @@ namespace SampleApp
 		/// </summary>
 		private void AdjustInternetSection()
 		{
-			var internetSection = browser.Document.GetElementById("internet");
+			var internetSection = _browser.Document.GetElementById("internet");
 			internetSection.SetAttribute("style", String.Format("display : {0}; visibility : {1}",
 			                                                    _internetLayedOut ? "inline" : "none",
 			                                                    _internetVisible ? "visible" : "hidden"));
-			var internetLabel = browser.Document.GetElementById("internet-label");
+			var internetLabel = _browser.Document.GetElementById("internet-label");
 			internetLabel.TextContent = _internetLabelText;
 		}
 
@@ -75,16 +86,16 @@ namespace SampleApp
 
 		private void OnInternetClicked(object sender, EventArgs e)
 		{
-			var input = browser.Document.GetElementById("labelText") as Gecko.DOM.GeckoInputElement;
+			var input = _browser.Document.GetElementById("labelText") as Gecko.DOM.GeckoInputElement;
 			var labelText = input.Value;
-			browser.Document.GetElementById("usb-label").TextContent = labelText;
+			_browser.Document.GetElementById("usb-label").TextContent = labelText;
 		}
 
 		private void OnTimerTick(object sender, EventArgs e)
 		{
 			_timer.Stop();
 			_timer.Tick -= OnTimerTick;
-			var hubLabel = browser.Document.GetElementById("hub-label");
+			var hubLabel = _browser.Document.GetElementById("hub-label");
 			hubLabel.TextContent = "Hello hub";
 			hubLabel.SetAttribute("style", "font-style:italic");
 		}
