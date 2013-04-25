@@ -9,6 +9,7 @@ namespace SampleApp
 	{
 	    private readonly HtmlButton _usbButton;
 		private readonly HtmlButton _hubButton;
+		private readonly HtmlButton _internetButton;
 	    private readonly HtmlButton _toggleInsertUsbFlashDrive;
 		private GeckoWebBrowser browser;
 		private bool _internetVisible = true;
@@ -24,9 +25,11 @@ namespace SampleApp
 			Controls.Add(browser);
 			_usbButton = new HtmlButton(browser, "UsbButton");
 			_hubButton = new HtmlButton(browser, "ChorusHubButton");
+			_internetButton = new HtmlButton(browser, "InternetButton");
             _toggleInsertUsbFlashDrive = new HtmlButton(browser, "toggleInsertUsbFlashDrive");
             _usbButton.Clicked += OnUsbClicked;
 			_hubButton.Clicked += OnHubClicked;
+			_internetButton.Clicked += OnInternetClicked;
 		    _toggleInsertUsbFlashDrive.Clicked += OnToggleInsertUsbFlashDriveButtonClicked;
 			_timer = new Timer();
 			_timer.Tick += OnTimerTick;
@@ -68,6 +71,13 @@ namespace SampleApp
 			_internetVisible = !_internetVisible;
 			_internetLabelText = "Hub clicking happened last.";
 			AdjustInternetSection();
+		}
+
+		private void OnInternetClicked(object sender, EventArgs e)
+		{
+			var input = browser.Document.GetElementById("labelText") as Gecko.DOM.GeckoInputElement;
+			var labelText = input.Value;
+			browser.Document.GetElementById("usb-label").TextContent = labelText;
 		}
 
 		private void OnTimerTick(object sender, EventArgs e)
