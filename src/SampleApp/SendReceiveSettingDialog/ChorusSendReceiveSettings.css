@@ -4,6 +4,7 @@ BODY
 	margin: 10px 20px;
 	font-family: verdana;
 	font-size: 9pt;
+	overflow-x: hidden;
 }
 #bottomButtonRow
 {
@@ -33,17 +34,6 @@ BUTTON IMG
 {
 	vertical-align: middle;
 }
-/*BUTTON
-{
-	font-family: Verdana;
-	//width: 82px;
-	text-align: left;
-	//height: 24px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin-bottom: 0px;
-	margin-top: 7px;
-}*/
 .serverChooser
 {
 	width: 268px;
@@ -52,6 +42,17 @@ BUTTON IMG
 {
 	margin-left: 45px;
 	display: inline-block;
+}
+#bottomRightButtonCluster button
+{
+	font-family: Verdana;
+	width: 82px;
+	text-align: left;
+	line-height: 24px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	margin-top: 7px;
 }
 INPUT
 {
@@ -108,7 +109,7 @@ button::-moz-focus-inner
 }
 #tabs
 {
-	background-color: lightgrey;
+	//background-color: lightgrey;
 	padding: 2px;
 	border-radius: 2px;
 }
@@ -128,4 +129,6 @@ div.content
 {
 	margin-left: 70px;
 	padding: 1em;
+	overflow-y: auto;
+	height: 250px;
 }

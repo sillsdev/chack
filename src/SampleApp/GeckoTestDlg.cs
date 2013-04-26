@@ -59,7 +59,7 @@ namespace SampleApp
 	    private void OnSettingsClicked(object sender, EventArgs e)
         {
             var chorusSendReceiveSettingsDialog = new ChorusSendReceiveSettingsDialog();
-            chorusSendReceiveSettingsDialog.Size = new Size(550, 600);
+            chorusSendReceiveSettingsDialog.Size = new Size(550, 530);
             chorusSendReceiveSettingsDialog.Show();
 	    }
 
@@ -83,7 +83,8 @@ namespace SampleApp
 		private void OnToggleInsertUsbFlashDriveButtonClicked(object sender, EventArgs e)
 	    {
 	        _usbButton.Enable = !_usbButton.Enable;
-	    }
+			_browser.Document.GetElementById("usb-label").TextContent = "Found at z:/";
+		}
 
 	    private void OnUsbClicked(object sender, EventArgs e)
 	    {
@@ -101,9 +102,6 @@ namespace SampleApp
 
 		private void OnInternetClicked(object sender, EventArgs e)
 		{
-			var input = _browser.Document.GetElementById("labelText") as Gecko.DOM.GeckoInputElement;
-			var labelText = input.Value;
-			_browser.Document.GetElementById("usb-label").TextContent = labelText;
 		}
 
 		private void OnTimerTick(object sender, EventArgs e)
