@@ -12,6 +12,7 @@ namespace SampleApp
 		private readonly HtmlButton _hubButton;
         private readonly HtmlButton _internetButton;
         private readonly HtmlButton _settingButton;
+        private readonly HtmlButton _graphiteButton;
 	    private readonly HtmlButton _toggleInsertUsbFlashDrive;
 		private GeckoWebBrowser _browser;
 		private bool _internetVisible = true;
@@ -29,17 +30,31 @@ namespace SampleApp
 			_hubButton = new HtmlButton(_browser, "ChorusHubButton");
 			_internetButton = new HtmlButton(_browser, "InternetButton");
 		    _settingButton = new HtmlButton(_browser, "settingsButton");
+		    _graphiteButton = new HtmlButton(_browser, "enableGraphiteButton");
             _toggleInsertUsbFlashDrive = new HtmlButton(_browser, "toggleInsertUsbFlashDrive");
             _usbButton.Clicked += OnUsbClicked;
 			_hubButton.Clicked += OnHubClicked;
 		    _settingButton.Clicked += OnSettingsClicked;
 			_internetButton.Clicked += OnInternetClicked;
+		    _graphiteButton.Clicked += OnGraphiteButtonClicked;
 		    _toggleInsertUsbFlashDrive.Clicked += OnToggleInsertUsbFlashDriveButtonClicked;
 			_timer = new Timer();
 			_timer.Tick += OnTimerTick;
 			_timer.Interval = 5000;
 			_timer.Start();
+            Size = new Size(640, 480);
 		}
+
+	    private void OnGraphiteButtonClicked(object sender, EventArgs e)
+	    {
+	        GraphiteEnabled = !GraphiteEnabled;
+	    }
+
+	    private bool GraphiteEnabled
+	    {
+	        get { return (bool) GeckoPreferences.User["gfx.font_rendering.graphite.enabled"]; }
+            set { GeckoPreferences.User["gfx.font_rendering.graphite.enabled"] = value; }
+	    }
 
 	    private void OnSettingsClicked(object sender, EventArgs e)
         {
