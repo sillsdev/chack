@@ -11,23 +11,30 @@
             {
 	            line-height: 42px;
 	            font-family: Verdana;
-	            width: 175px;
+	            width: 190px;
 	            text-align: left;
             }
             INPUT
             {
 	            width: 100%;
             }
-            #settingsButton
-            {
-	            float: right;
-	            position: relative;
-	            left: 17px;
-	            top: -7px;
-	            background: transparent;
-	            border: 1px none #000000;
-	            width: 113px;
-            }
+			#settings
+			{
+				float: right;
+				position: relative;
+				right: 17px;
+				/* why 80? That's a trial-and-error value. We want the text to align with the
+				* bottom of the left button. The browser centers the text inside of this element,
+				* so it needs to have roughly double the height of the button. But then the
+				* baseline is aligned, so we subtract some pixels until it looks right :-)
+				*/
+				line-height: 80px;
+			}
+			#settingsButton:hover
+			{
+				cursor: pointer;
+				color: blue;
+			}
 		</style>
 	</head>
 	<body>
@@ -53,11 +60,13 @@
 				<button id="ChorusHubButton"><img src="../../src/Chorus/Resources/chorusHubMedium.png">Chorus Hub</button>
 				<br/>
 				<label id="hub-label">Checking...</label><a></a>
-		        <button id="settingsButton"><img src="settings16x16.png">Settings...</button>
 				<br/>
 			</p>
 			<p>
-			<button id="toggleInsertUsbFlashDrive"> Insert Usb Flash Drive</button>
+				<button id="toggleInsertUsbFlashDrive"> Insert Usb Flash Drive</button>
+				<span id="settings">
+					<span id="settingsButton"><img src="settings16x16.png">Settings...</span>
+				</span>
 			</p>
 	</body>
 </html>
