@@ -5,10 +5,6 @@ BODY
 	font-family: verdana;
 	font-size: 9pt;
 }
-#tabs
-{
-	height: 397px;
-}
 #bottomButtonRow
 {
 	/*+placement:anchor-bottom-left 0px 0px;*/
@@ -37,17 +33,17 @@ BUTTON IMG
 {
 	vertical-align: middle;
 }
-BUTTON
+/*BUTTON
 {
 	font-family: Verdana;
-	width: 82px;
+	//width: 82px;
 	text-align: left;
-	height: 24px;
+	//height: 24px;
 	padding-top: 0px;
 	padding-bottom: 0px;
 	margin-bottom: 0px;
 	margin-top: 7px;
-}
+}*/
 .serverChooser
 {
 	width: 268px;
@@ -72,4 +68,64 @@ TD.label
 DIV.ch
 {
 	padding-top: 0.2in;
+}
+#fragment-2
+{
+display:none;
+}
+#tab-1, #tab-2
+{
+	line-height:24px;
+	width:120px;
+	background: white;
+	border:0px solid;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+}
+#tab-1
+{
+	border-bottom: 1px solid white;
+}
+#tab-2
+{
+	border-bottom: 1px solid lightgrey;
+}
+#tab-1.non-active-tab:hover, #tab-2.non-active-tab:hover
+{
+	background-color: LightSteelBlue;
+}
+#tab-1.active-tab:hover, #tab-2.active-tab:hover
+{
+	background-color: white;
+}
+.active-tab:active, .active-tab:focus
+{
+	outline: none;
+}
+button::-moz-focus-inner
+{
+	border: 0;
+}
+#tabs
+{
+	background-color: lightgrey;
+	padding: 2px;
+	border-radius: 2px;
+}
+.fragment
+{
+	padding: 5px;
+	background-color: white;
+}
+div.leftimage
+{
+	float: left;
+	width: 65px;
+	margin: 0;
+	padding: 1em;
+}
+div.content
+{
+	margin-left: 70px;
+	padding: 1em;
 }

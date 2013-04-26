@@ -5,21 +5,20 @@ namespace SampleApp
 {
     public class HtmlButton
     {
-        private readonly string _buttonName;
         public event EventHandler Clicked;
         private readonly GeckoWebBrowser _browser;
 
         public HtmlButton(GeckoWebBrowser browser, string buttonName)
         {
             _browser = browser;
-            _buttonName = buttonName;
+			Name = buttonName;
             browser.DomClick += browser_DomClick;
         }
 
         void browser_DomClick(object sender, GeckoDomEventArgs e)
         {
             GeckoHtmlElement element = e.Target;
-            if (element.Id == _buttonName)
+			if (element.Id == Name)
             {
                 if (Clicked != null)
                 {
@@ -27,6 +26,8 @@ namespace SampleApp
                 }
             }
         }
+
+		public string Name { get; private set; }
 
         public bool Enable
         {
@@ -36,7 +37,7 @@ namespace SampleApp
                 {
                     string result;
                     context.EvaluateScript(
-                        String.Format("document.getElementById('{0}').disabled", _buttonName), out result);
+                        String.Format("document.getElementById('{0}').disabled", Name), out result);
                     return result == "true" ? false : true;
                 }
             }
@@ -47,7 +48,7 @@ namespace SampleApp
                     string result;
                     var valueToSet = value ? "false" : "true";
                     context.EvaluateScript(
-                        String.Format("document.getElementById('{0}').disabled = {1}", _buttonName, valueToSet),
+                        String.Format("document.getElementById('{0}').disabled = {1}", Name, valueToSet),
                         out result);
                 }
             }
