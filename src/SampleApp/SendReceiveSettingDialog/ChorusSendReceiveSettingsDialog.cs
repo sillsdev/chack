@@ -38,7 +38,8 @@ namespace SampleApp
 
 		private void SwitchTab(string button)
 		{
-			int activeTab, nonActiveTab;
+			int activeTab =1;
+			int nonActiveTab = 2;
 			switch (button)
 			{
 				case "tab-1":
